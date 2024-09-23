@@ -11,6 +11,6 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['nuxt-jsonld', '@nuxtjs/seo', '@vite-pwa/nuxt','@nuxt/image'],
+  modules: ['nuxt-jsonld', '@nuxtjs/seo', '@vite-pwa/nuxt', '@nuxt/image', '@pinia/nuxt'],
  
 })
