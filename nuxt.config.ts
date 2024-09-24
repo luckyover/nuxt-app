@@ -12,5 +12,7 @@ export default defineNuxtConfig({
     },
   },
   modules: ['nuxt-jsonld', '@nuxtjs/seo', '@vite-pwa/nuxt', '@nuxt/image', '@pinia/nuxt'],
- 
+  routeRules: {
+    '/admin/**': { appMiddleware: 'auth-admin' },
+  },
 })
