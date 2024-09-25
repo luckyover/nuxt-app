@@ -8,9 +8,9 @@ export const useToast = () => {
     const toast = { message, type };
     toasts.value.push(toast);
     // Automatically remove the toast after the specified duration
-    setTimeout(() => {
-      removeToast(toasts.value.length - 1); // Remove the last toast added
-    }, duration);
+    // setTimeout(() => {
+    //   removeToast(toasts.value.length - 1); // Remove the last toast added
+    // }, duration);
   };
 
   const removeToast = (index:number) => {
