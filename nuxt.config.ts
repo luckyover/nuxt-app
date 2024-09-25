@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ['nuxt-jsonld', '@nuxtjs/seo', '@nuxt/image', '@pinia/nuxt'],
+  modules: ['nuxt-jsonld', '@nuxtjs/seo', '@nuxt/image', '@pinia/nuxt','nuxt-headlessui'],
   routeRules: {
     '/admin/**': { appMiddleware: 'auth-admin' },
   },
