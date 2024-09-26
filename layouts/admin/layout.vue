@@ -24,7 +24,7 @@ const handleClickMenu = () => {
 </script>
 <template>
   
-  <Vertical type="ipad" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
+  <Vertical :type="device" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
   <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
   <div class="">
     <MenuLogo :type="device" @clickMenu="handleClickMenu" />
