@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useUser } from "@/composables/useUser";
 
-import Api from "@/composables/useApi";
+import useApi from "@/composables/useApi";
 import { useAppStore } from "@/stores/app";
 import { ref } from "vue";
-import { useToast } from "@/composables/useToast";
-
-const { showToast } = useToast();
+const appStore = useAppStore();
+const api = useApi();
 
 const { login } = useUser();
 const users = ref([]);
@@ -16,10 +15,10 @@ const data = ref({
 });
 
 const fetchLogin = async () => {
-  Api.post("/login", data.value); //lưu thông tin login
+  api.post("/login", data.value); //lưu thông tin login
 };
 
-const appStore = useAppStore();
+
 let handleClick = () => {
   appStore.showMessage({
     type: 1,
@@ -32,12 +31,8 @@ let handleClick = () => {
   });
 };
 
-const notify = () => {
-  showToast('This is a toast notification!', 'success', 3000);
-};
 </script>
 <template>
-  <button @click="notify">Show Toast</button>
 
   <div class="bg-gray-100 flex justify-center items-center h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">

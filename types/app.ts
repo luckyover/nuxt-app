@@ -12,9 +12,12 @@ export interface IAppState {
  
   isShowMessage: boolean
   message: IMessage
- 
+  toasts:Toast[]
 }
+
+
 export interface Toast {
   message: string;
   type: 'info' | 'success' | 'warning' | 'error'; // Define possible toast types
+  duration:number;
 }

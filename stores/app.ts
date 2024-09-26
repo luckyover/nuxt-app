@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { IMessage ,IAppState} from '@/types/app'
+import type { IMessage ,IAppState,Toast} from '@/types/app'
 
 const defaultMessage:IMessage= {
   type: '',
@@ -15,7 +15,7 @@ export const useAppStore = defineStore('app', {
     return {
       isShowMessage: false,
       message: { ...defaultMessage },
-     
+      toasts:[] as Toast[],
     }
   },
   actions: {
@@ -38,6 +38,19 @@ export const useAppStore = defineStore('app', {
       }
       this.hideMessage(); 
     },
+    // Toast
+
+    showToast(message: Toast) {
+      this.toasts.push(message);
+      setTimeout(() => {
+        this.removeToast(this.toasts.length - 1); // Remove the last toast added
+      }, message.duration);
+
+    },
+    removeToast (index:number){
+      this.toasts.splice(index, 1); // Remove the toast at the given index
+    }
+
    
   },
  

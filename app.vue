@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import Message  from '@/components/common/Message.vue';
-import { useToast } from '@/composables/useToast';
 import Toast from '@/components/common/Toast.vue';
-const { toasts } = useToast();
+import { useAppStore } from "@/stores/app";
+const appStore = useAppStore();
 </script>
 <template>
   <div>
     <!-- <NuxtRouteAnnouncer />
     <NuxtWelcome /> -->
-      <Toast :toasts="toasts" />
+      <Toast/>
       <Message/>
 
       

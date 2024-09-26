@@ -5,7 +5,7 @@
       <div v-for="(toast, index) in toasts" :key="index"
         enter-from-class="opacity-0 translate-x-full"
         enter-to-class="opacity-100 translate-x-0"
-         class="transition-all duration-300 ease-linear"
+         class="transition-all duration-300 ease-linear min-w-[320px]"
       >
         <div
           class="flex mb-2 items-center border-l-4  bg-white border border-gray-300 p-3 rounded-lg shadow-lg max-w-sm"
@@ -28,15 +28,17 @@
         
 
             <div>
-              <p class="font-semibold text-gray-900">Thành công!</p>
-              <p class="text-sm text-gray-600">Bạn đã đăng ký thành công tài khoản tại F8.</p>
+              <p class="font-semibold text-gray-900">
+               {{toastMessage[toast.type]}}
+              </p>
+              <p class="text-sm text-gray-600">{{toast.message}}</p>
             </div>
           </div>
 
           <!-- Close button -->
           <button class="text-gray-400 hover:text-gray-600" @click="removeToast(index)">
             <Icon name="mdi:remove" 
-            class="w-6 h-6"
+            class="w-5 h-5"
            
              />
           </button>
@@ -48,13 +50,10 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useAppStore } from '@/stores/app'
+const appStore = useAppStore();
+const { toasts } = storeToRefs(appStore);
 
-const props = defineProps({
-  toasts: {
-    type: Array,
-    default: () => []
-  }
-});
 
 // Computed property for icon names
 const iconNames = computed(() => ({
@@ -72,9 +71,16 @@ const iconClasses = computed(() => ({
   warning: 'text-orange-500',
 }));
 
+const toastMessage = computed(() => ({
+  success: 'Thành công!',
+  error: 'Lỗi',
+  info: 'Thông tin',
+  warning: 'Cảnh báo',
+}));
+
+
 // Function to remove toast; you might want to emit this or handle it differently
 const removeToast = (index: number) => {
-  // Handle toast removal logic
-    props.toasts.splice(index, 1);
+  appStore.removeToast(index)
 };
 </script>

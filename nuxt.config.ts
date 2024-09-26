@@ -22,4 +22,14 @@ export default defineNuxtConfig({
   routeRules: {
     '/admin/**': { appMiddleware: 'auth-admin' },
   },
+
+  runtimeConfig: {
+    public: {
+      API_URI: process.env.API_URI || 'http://localhost:3000', // Default value if not set
+      API_PATH: process.env.API_PATH || '/api',
+      API_KEY: process.env.API_KEY,
+      API_TIMEOUT: process.env.API_TIMEOUT || '60000',
+    },
+  },
+  
 })
