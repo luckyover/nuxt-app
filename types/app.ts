@@ -14,6 +14,7 @@ export interface IAppState {
   message: IMessage
   toasts:Toast[]
   errors:Object
+  device?:String | undefined
 }
 
 

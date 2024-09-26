@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Layout from '@/layouts/layout/layout.vue'
+import Layout from '@/layouts/admin/layout.vue'
 
 
 </script>

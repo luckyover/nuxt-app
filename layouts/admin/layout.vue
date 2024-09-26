@@ -1,40 +1,33 @@
 <script lang="ts" setup>
 // import HorizontalMenu from "@/components/menu/horizontal/MenuDropDown.vue";
-// import MenuLogo from "@/components/menu/logo/MenuLogo.vue";
+import MenuLogo from "@/components/menu/logo/MenuLogo.vue";
 import Vertical from "@/components/menu/vertical/MenuDropDown.vue";
-// import MenuMobile from "@/components/menu/mobile/Mobile.vue";
-
+import MenuMobile from "@/components/menu/mobile/Mobile.vue";
 import { onMounted, onUnmounted, ref } from "vue";
+import { useAppStore } from '@/stores/app';
+import { storeToRefs } from 'pinia';
 
 interface MenuComponent {
   isOpen: boolean;
 }
-const device = ref<string>("pc");
+
+const appStore = useAppStore();
+const {device} = storeToRefs(appStore);
 const menuRef = ref<MenuComponent | null>(null);
-const handleResize = () => {
-  const width = window.innerWidth;
-  device.value = width < 768 ? "mobile" : width < 1024 ? "ipad" : "pc";
-};
+
 const handleClickMenu = () => {
   if (menuRef.value) {
     menuRef.value.isOpen = !menuRef.value.isOpen;
   }
 };
-onMounted(() => {
-  window.addEventListener("resize", handleResize);
-  handleResize();
-});
 
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
 </script>
 <template>
   
-  <Vertical :type="device" v-if="device == 'pc'" ref="menuRef"> </Vertical>
+  <Vertical type="ipad" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
   <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
   <div class="">
-    <!-- <MenuLogo :type="device" @clickMenu="handleClickMenu" /> -->
+    <MenuLogo :type="device" @clickMenu="handleClickMenu" />
     <div class="HorizontalMenu w-full relative top-[4rem] bg-bg_layout">
       <div class="ln-container">
         <!-- <HorizontalMenu v-if="device == 'pc'" /> -->
@@ -43,7 +36,7 @@ onUnmounted(() => {
   </div>
 
   <div class="ln-container pt-20">
-    {{device}}
+ 
   </div>
 </template>
 <style>

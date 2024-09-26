@@ -21,6 +21,9 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     '/admin/**': { appMiddleware: 'auth-admin' },
+    '/**': {
+      appMiddleware: 'check-device',  // Apply checkDevice middleware for the root route
+  },
   },
 
   runtimeConfig: {

@@ -16,7 +16,7 @@ const handelClickMenu = () => {
       >
         <div class="flex w-full flex-wrap justify-between items-center px-8 md:px-6">
           <div class="navbar-brand flex items-center gap-2">
-            <div class="layout-menu-toggle navbar-nav pt-[10px]" v-if="props.type == 'ipad'" >
+            <div class="layout-menu-toggle navbar-nav pt-[10px]" v-if="type == 'ipad'">
             <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)" @click ="handelClickMenu" >
               <Icon name="bx:menu" class='h-6 w-6'></Icon> 
             </a>

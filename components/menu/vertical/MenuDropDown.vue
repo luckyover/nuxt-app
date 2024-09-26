@@ -11,13 +11,11 @@ const handleToggle = (index:any) => {
 };
 
 const getId = computed(() => {
-  if (props.type == "ipad") {
-    return "menu-ipad";
-  } else {
-    return "menu-vertical";
-  }
+  return props.type === "ipad" ? "menu-ipad" : "menu-vertical";
 });
-
+onMounted(() => {
+  console.log("Mounted getId:", getId.value);
+});
 defineExpose({
   isOpen
 })

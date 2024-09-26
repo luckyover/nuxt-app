@@ -17,6 +17,7 @@ export const useAppStore = defineStore('app', {
       message: { ...defaultMessage },
       toasts:[] as Toast[],
       errors:{},
+      device:'',
     }
   },
   actions: {
@@ -56,7 +57,11 @@ export const useAppStore = defineStore('app', {
       this.errors = {
         ...error
       }
-    } 
+    },
+    //device
+    setDeviceInfo(info: string | undefined) {
+      this.device = info;
+  },
 
    
   },
