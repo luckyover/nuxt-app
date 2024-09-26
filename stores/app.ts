@@ -16,6 +16,7 @@ export const useAppStore = defineStore('app', {
       isShowMessage: false,
       message: { ...defaultMessage },
       toasts:[] as Toast[],
+      errors:{},
     }
   },
   actions: {
@@ -49,7 +50,13 @@ export const useAppStore = defineStore('app', {
     },
     removeToast (index:number){
       this.toasts.splice(index, 1); // Remove the toast at the given index
-    }
+    },
+    //message error
+    addError(error:Object){
+      this.errors = {
+        ...error
+      }
+    } 
 
    
   },

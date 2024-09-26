@@ -13,6 +13,7 @@ export interface IAppState {
   isShowMessage: boolean
   message: IMessage
   toasts:Toast[]
+  errors:Object
 }
 
 

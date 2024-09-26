@@ -27,13 +27,17 @@ const createApi = () => {
     },
     function (error) {
       const appStore = useAppStore(); // Get the store instance
-      if (error.response && (error.response.status === 401 || error.response.status === 500 || error.response.status === 501 || error.response.status === 201)) {
+      const status = error.response.status;
+      if ([401, 500, 501].includes(status)) {
       
         appStore.showToast({
           message: error.response.data.message,
           type: 'error',
           duration: 3000,
         });
+      }else if([422, 201].includes(status)){
+
+        appStore.addError(error.response.data.error)
       }
       // Return a rejected promise to propagate the error
       return Promise.reject(error);
