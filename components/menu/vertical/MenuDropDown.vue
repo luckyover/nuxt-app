@@ -13,9 +13,7 @@ const handleToggle = (index:any) => {
 const getId = computed(() => {
   return props.type === "ipad" ? "menu-ipad" : "menu-vertical";
 });
-onMounted(() => {
-  console.log("Mounted getId:", getId.value);
-});
+
 defineExpose({
   isOpen
 })
@@ -145,7 +143,7 @@ defineExpose({
 .menu-ipad {
   transition-duration: 0.3s;
   transition-property: transform, -webkit-transform;
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-101%, 0, 0);
 }
 .menu-ipad.open {
   transform: translate3d(0, 0, 0);

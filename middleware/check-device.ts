@@ -27,8 +27,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         } else {
             deviceInfo = '';
         }
-        console.log(deviceInfo);
-        
+       
         // Save the device info in the Pinia store
         appStore.setDeviceInfo(deviceInfo);
     }

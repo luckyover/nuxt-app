@@ -28,10 +28,12 @@ const createApi = () => {
     function (error) {
       const appStore = useAppStore(); // Get the store instance
       const status = error.response.status;
-      if ([401, 500, 501].includes(status)) {
       
+      
+      if ([401, 500, 501,404].includes(status)) {
+       
         appStore.showToast({
-          message: error.response.data.message,
+          message: error.response.data.message || error.message,
           type: 'error',
           duration: 3000,
         });

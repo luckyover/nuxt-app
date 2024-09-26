@@ -7,12 +7,16 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { useAppStore } from '@/stores/app';
 import { storeToRefs } from 'pinia';
 
+
 interface MenuComponent {
   isOpen: boolean;
 }
+onMounted(()=>{
+  const appStore = useAppStore();
+  const {device} = storeToRefs(appStore);
 
-const appStore = useAppStore();
-const {device} = storeToRefs(appStore);
+})
+
 const menuRef = ref<MenuComponent | null>(null);
 
 const handleClickMenu = () => {
