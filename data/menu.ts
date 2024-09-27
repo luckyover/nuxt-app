@@ -1,18 +1,13 @@
 export default [
   {
-    menu: "Layouts1",
-    icon: "bx:menu",
+    menu: "Categories",
+    icon: "bx:category",
+    module:'category',
     child: [
       {
-        menu: "Test",
+        menu: "Category",
         icon: "bx:menu",
-
-      },
-      {
-        menu: "Test2",
-        icon: "bx:menu",
-
-      
+        link:"category",
       },
     ],
   },

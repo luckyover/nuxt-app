@@ -4,6 +4,8 @@ export interface MenuItem {
     icon?: string;
     child?: MenuItem[];
     show?: boolean;
+    link?:string;
+    module?:string;
 }
 
 export interface IMenuChildDropDown {

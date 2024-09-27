@@ -4,7 +4,9 @@ import menu from "@/data/menu";
 import { ref, computed , watch } from "vue";
 import type { IMenuResponsive } from "@/types/menu/menu";
 import { useAppStore } from '@/stores/app';
+import { useRoute } from '#app';
 
+const route = useRoute();
 const appStore = useAppStore();
 const props = defineProps<IMenuResponsive>();
 const isOpen = ref<boolean>(false);
@@ -16,6 +18,19 @@ const handleToggle = (index:any) => {
 
 const getId = computed(() => {
   return props.type === "ipad" ? "menu-ipad" : "menu-vertical";
+});
+
+//open menu
+const isModule = (link: any,index:any) => {
+  if(route.path.split('/')[2] === link){
+     openMenuIndex.value = index
+  }
+};
+
+onMounted(() => {
+  menu.forEach((item, index) => {
+    isModule(item.module, index);
+  });
 });
 
 watch(() => isOpen.value, (newVal) => {
@@ -88,7 +103,7 @@ defineExpose({
   padding: 9px 35px 9px 16px;
   border-radius: 0.375rem;
 }
-#menu-wrap .item-parent.active .menu-link {
+#menu-wrap .item-parent.active > .menu-link {
   color: #696cff;
   background-color: rgba(105, 108, 255, 0.16) !important;
 }

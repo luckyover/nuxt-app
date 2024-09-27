@@ -45,7 +45,7 @@ onMounted(() => {
         </div> -->
       </div>
       <div class="ln-container pt-5 px-3">
-       
+          <slot></slot>
       </div>
     </div>
   </div>

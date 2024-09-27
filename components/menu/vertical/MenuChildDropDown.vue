@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import MenuChildDropDown from "@/components/menu/vertical/MenuChildDropDown.vue";
-import { IMenuChildDropDown } from "@/types/menu/menu.ts";
+import type { IMenuChildDropDown } from "@/types/menu/menu";
 import { ref } from "vue";
+import { useRoute } from '#app';
+const route = useRoute();
 
 defineProps<IMenuChildDropDown>();
 
@@ -10,11 +12,23 @@ const toggle = () => {
   emit("toggle");
 };
 
+const isActive = (link: any) => {
+
+  return route.path == '/admin/'+link;
+};
+
+const isModule = (link: any) => {
+  return route.path.split('/')[2] === link;
+};
+
+
 //child
 const openMenuIndex = ref(null);
 const handleToggle = (index:any) => {
   return (openMenuIndex.value = openMenuIndex.value === index ? null : index);
 };
+
+
 </script>
 
 <template>
@@ -24,15 +38,19 @@ const handleToggle = (index:any) => {
       item.child && item.child.length > 0 && 'has-child',
       parent ? 'item-parent' : 'item-child',
       isOpen && 'open',
+      isModule(item.module) ? 'active' : ''
     ]"
     :ref="parent ? 'menuItem' : 'menuParent'"
     @click.stop="toggle"
   >
-    <a
+    <NuxtLink
       href="javascript:void(0)"
       class="menu-link menu-toggle text-menu p-[0.565rem] px-[1rem] flex items-center"
-    
-      :class="[item.icon && item.icon !== '' ? '' : 'not-icon']"
+      :to="item.link"
+      :class="[
+        item.icon && item.icon !== '' ? '' : 'not-icon',
+        isActive(item.link) ? 'active' : ''
+      ]"
     >
       <Icon
         class="menu-icon tf-icons bx mr-[0.5rem] text-[1.25rem] min-w-6 h-6"
@@ -42,8 +60,11 @@ const handleToggle = (index:any) => {
       ></Icon>
 
      
-      <div>{{ item.menu }}</div>
-    </a>
+      <div>
+        {{ item.menu }}
+     
+      </div>
+    </NuxtLink>
     <div
       class="grid duration-300 ease-out"
       :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
