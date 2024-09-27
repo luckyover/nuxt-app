@@ -42,7 +42,7 @@ defineExpose({
       id="menu-wrap"
       :class="[isOpen ? 'open' : 'close', getId]"
     >
-      <div class="logo-details h-[60px] leading-[60px] flex items-center relative ml-4">
+      <div class="logo-details h-[60px] leading-[60px] flex items-center relative ml-4 mt-4">
       
         <Icon name="bxl:c-plus-plus" class=" icon text-black h-[60px] !leading-[60px] min-w-[55px] text-2xl text-center opacity-0 logo_name" ></Icon>
 

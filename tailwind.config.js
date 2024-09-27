@@ -16,6 +16,7 @@ export default {
         shadow:'#d9dee3',
         nav:'#697a8d',
         bg_layout:'rgba(255, 255, 255)',
+        bg_link:'rgba(34, 48, 62, 0.06)',
         bgm:'#696cff',
         bgh:'#787bff',
         bod:'#f5f5f9',
