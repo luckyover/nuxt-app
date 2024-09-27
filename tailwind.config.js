@@ -67,6 +67,11 @@ export default {
         'custom-gradient': 'linear-gradient(#cad0ff, #e3e3e3)',
         'custom-gradient1': 'linear-gradient(135deg, hsla(233, 97%, 77%, 1) 0%, hsla(0, 0%, 89%, 1) 100%, hsla(278, 50%, 73%, 1) 100%)',
       },
+      width: {
+        'calc-menu': 'calc(100% - 260px)',
+        'calc-menu-close': 'calc(100% - 84px)',
+      },
+
     }
    
   },

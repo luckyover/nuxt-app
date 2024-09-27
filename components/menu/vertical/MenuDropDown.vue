@@ -1,17 +1,25 @@
 <script setup lang="ts">
 import MenuChildDropDown from "@/components/menu/vertical/MenuChildDropDown.vue";
 import menu from "@/data/menu";
-import { ref, computed } from "vue";
+import { ref, computed , watch } from "vue";
 import type { IMenuResponsive } from "@/types/menu/menu";
+import { useAppStore } from '@/stores/app';
+
+const appStore = useAppStore();
 const props = defineProps<IMenuResponsive>();
 const isOpen = ref<boolean>(false);
 const openMenuIndex = ref(null);
+
 const handleToggle = (index:any) => {
   return (openMenuIndex.value = openMenuIndex.value === index ? null : index);
 };
 
 const getId = computed(() => {
   return props.type === "ipad" ? "menu-ipad" : "menu-vertical";
+});
+
+watch(() => isOpen.value, (newVal) => {
+  appStore.setOpenVertical(newVal); // Update the store whenever the prop changes
 });
 
 defineExpose({

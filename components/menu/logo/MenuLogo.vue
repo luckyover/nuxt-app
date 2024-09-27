@@ -11,7 +11,7 @@ const handelClickMenu = () => {
 <template>
   <!-- Layout wrapper -->
    <nav
-        class="z-50  ln-container layout-navbar  w-full justify-start navbar h-16 flex fixed inset-x-0 inset-y-0   bg-bg_layout text-nav py-1"
+        class=" transition-all duration-500 ease-in-out z-50  ln-container layout-navbar  w-full justify-start navbar h-16 flex sticky inset-x-0 inset-y-0   bg-bg_layout text-nav py-1"
         id="layout-navbar"
       >
         <div class="flex w-full flex-wrap justify-between items-center px-8 md:px-6">

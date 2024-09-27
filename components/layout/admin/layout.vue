@@ -4,20 +4,18 @@ import MenuLogo from "@/components/menu/logo/MenuLogo.vue";
 import Vertical from "@/components/menu/vertical/MenuDropDown.vue";
 import MenuMobile from "@/components/menu/mobile/Mobile.vue";
 import { onMounted, onUnmounted, ref } from "vue";
-import { useAppStore } from '@/stores/app';
-import { storeToRefs } from 'pinia';
-
+import { useAppStore } from "@/stores/app";
 
 interface MenuComponent {
   isOpen: boolean;
 }
-onMounted(()=>{
-  const appStore = useAppStore();
-  const {device} = storeToRefs(appStore);
-
-})
 
 const menuRef = ref<MenuComponent | null>(null);
+
+const appStore = useAppStore();
+const device = computed(() => appStore.device);
+const hasMounted = ref(false);
+const isOpenVertical = computed(() => appStore.isOpenVertical);
 
 const handleClickMenu = () => {
   if (menuRef.value) {
@@ -25,22 +23,31 @@ const handleClickMenu = () => {
   }
 };
 
+const containerClass = computed(() => {
+  return (isOpenVertical.value && device.value == 'pc') ? 'w-calc-menu' : (!isOpenVertical.value && device.value == 'pc') ? 'w-calc-menu-close' : '';
+});
+
+onMounted(() => {
+  hasMounted.value = true;
+});
 </script>
 <template>
-  
-  <Vertical :type="device" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
-  <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
-  <div class="">
-    <MenuLogo :type="device" @clickMenu="handleClickMenu" />
-    <div class="HorizontalMenu w-full relative top-[4rem] bg-bg_layout">
-      <div class="ln-container">
-        <!-- <HorizontalMenu v-if="device == 'pc'" /> -->
+  <div v-if="hasMounted">
+    <Vertical :type="device" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
+    <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
+    <div class="container-wrap ml-auto transition-all duration-500 ease-in-out " :class="containerClass" >
+      <div class="px-3 sticky top-0">
+        <MenuLogo :type="device" @clickMenu="handleClickMenu" />
+        <!-- <div class="HorizontalMenu w-full relative top-[4rem] bg-bg_layout">
+          <div class="ln-container"> -->
+            <!-- <HorizontalMenu v-if="device == 'pc'" /> -->
+          <!-- </div>
+        </div> -->
+      </div>
+      <div class="ln-container pt-5 px-3">
+       
       </div>
     </div>
-  </div>
-
-  <div class="ln-container pt-20">
- 
   </div>
 </template>
 <style>

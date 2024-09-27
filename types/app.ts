@@ -15,6 +15,7 @@ export interface IAppState {
   toasts:Toast[]
   errors:Object
   device?:String | undefined
+  isOpenVertical:boolean
 }
 
 

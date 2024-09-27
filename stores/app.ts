@@ -18,6 +18,7 @@ export const useAppStore = defineStore('app', {
       toasts:[] as Toast[],
       errors:{},
       device:'',
+      isOpenVertical:false,
     }
   },
   actions: {
@@ -61,7 +62,12 @@ export const useAppStore = defineStore('app', {
     //device
     setDeviceInfo(info: string | undefined) {
       this.device = info;
-  },
+    },
+
+    //isOpenVertical
+    setOpenVertical(isOpen : boolean){
+      this.isOpenVertical = isOpen;
+    },
 
    
   },
