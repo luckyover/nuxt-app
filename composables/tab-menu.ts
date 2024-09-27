@@ -1,5 +1,5 @@
-import { onMounted, onUnmounted , Ref  } from "vue";
-import { debounce } from "@/composables/debounce.ts";
+import { onMounted, onUnmounted  } from "vue";
+import { debounce } from "@/composables/debounce";
 
 interface Options {
   min: number;

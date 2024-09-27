@@ -20,6 +20,20 @@ const createApi = () => {
     },
   });
 
+  Api.interceptors.request.use(
+    function (config) {
+      const token = localStorage.getItem('token')
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
+      return config
+    },
+    function (error) {
+      return Promise.reject(error)
+    }
+  )
+
+
   // Set up the response interceptor
   Api.interceptors.response.use(
     function (response) {

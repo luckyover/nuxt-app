@@ -25,12 +25,16 @@ const fetchLogin = async () => {
 
     if (response.data.status === 200) {
       // Login the user
-      login(response.data.data.token, response.data.data.user);
+
+      login(response.data.data.user,response.data.data.token);
 
       // Get redirectFrom query or set default to '/admin/dashboard'
     
       const redirectTo = route.query.redirect  || '/admin/dashboard';
-      await router.push(redirectTo); // Navigate to the redirectTo route
+      
+      if (typeof redirectTo === 'string') {
+        await router.push(redirectTo); // Ensure redirectTo is a string
+      }
     }
   } catch (error) {
     console.error('Login error:', error);

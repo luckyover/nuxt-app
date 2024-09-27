@@ -1,10 +1,37 @@
 <script setup lang="ts">
 import type { IMenuResponsive } from "@/types/menu/menu";
-import DropDown from "@/components/common/DropDown";
+import DropDown from "@/components/common/DropDown.vue";
+
+import useApi from "@/composables/useApi";
+import { useAppStore } from "@/stores/app";
+
+const api = useApi();
+const router = useRouter(); // Initialize the router
+const route = useRoute();   // Initialize the route to get query parameters
+
+
+const { logout } = useUser();
+
 const emit = defineEmits(["clickMenu"]);
 const props = defineProps<IMenuResponsive>();
 const handelClickMenu = () => {
   emit("clickMenu");
+};
+
+
+const fetchLogout = async () => {
+  try {
+
+    const response = await api.post("/logout");
+
+    if (response.data.status === 200) {
+      // logout the user
+      logout();
+      await router.push('/admin/login'); // Navigate to the redirectTo route
+    }
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
 };
 </script>
 <template>
@@ -60,7 +87,7 @@ const handelClickMenu = () => {
               </template>
               <template #data-content>
                 <ul class="p-2 bg-white rounded-[0.357rem]">
-                  <li class="text-menu flex items-center gap-1 cursor-pointer hover:bg-bg_link p-1">
+                  <li class="text-menu flex items-center gap-1 cursor-pointer hover:bg-bg_link p-1" @click="fetchLogout">
                     <Icon name="bx:power-off" class="w-5 h-5"></Icon>
                       <span>Log Out</span>
                   </li>
