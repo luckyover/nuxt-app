@@ -33,9 +33,9 @@ const appStore = useAppStore();
 const {errors} = storeToRefs(appStore);
 
 const inputClasses = computed(() => {
-    return `mt-1 block w-full p-2 border rounded-md 
+    return `mt-1 block w-full p-1 border rounded-md 
            ${errors.value[props.name] ? 'border-red-600' : 'border-gray-300'} 
-           focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none`;
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-200 focus:outline-none`;
 });
 
 watch(() => errors.value[props.name], (newValue) => {
