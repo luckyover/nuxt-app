@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
+import Button from "@/components/form/Button.vue";
 
 const data = ref({
   id: "",
@@ -14,10 +15,12 @@ const data = ref({
   <Layout>
     <div class="rounded-lg overflow-hidden shadow-lg bg-white flex flex-col">
       <div class="card-title bg-gray-300 px-6">
-        <h4 class="py-1 font-medium w">Category</h4>
+        <h4 class="py-1 font-medium">Category</h4>
       </div>
-
+      
       <div class="card-body px-6 py-4">
+        <div class="mb-3 float-right"><Button class="px-4 pt-1 text-sm ">Save</Button></div>
+
         <div class="grid md:grid-cols-2 gap-2">
           <div class="grid md:grid-cols-[200px_repeat(1,1fr)] gap-2">
             <TextInput v-model="data.id" label="ID" name="id" type="text" />
