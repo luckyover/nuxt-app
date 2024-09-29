@@ -60,8 +60,8 @@ const fetchLogout = async () => {
           href="javascript:void(0)"
           class="app-brand-link flex items-center gap-2"
         >
-          <span class="app-brand-logo"> Logo </span>
-          <span class="app-brand-text text-3xl font-bold lowercase">Sneat</span>
+          <!-- <span class="app-brand-logo"> Logo </span>
+          <span class="app-brand-text text-3xl font-bold lowercase">Sneat</span> -->
         </a>
 
         <a

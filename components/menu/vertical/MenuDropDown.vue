@@ -11,6 +11,7 @@ const appStore = useAppStore();
 const props = defineProps<IMenuResponsive>();
 const isOpen = ref<boolean>(false);
 const openMenuIndex = ref(null);
+const isOpenVertical = computed(() => appStore.isOpenVertical);
 
 const handleToggle = (index:any) => {
   return (openMenuIndex.value = openMenuIndex.value === index ? null : index);
@@ -26,16 +27,20 @@ const isModule = (link: any,index:any) => {
      openMenuIndex.value = index
   }
 };
-
+ 
 onMounted(() => {
   menu.forEach((item, index) => {
     isModule(item.module, index);
   });
 });
 
-watch(() => isOpen.value, (newVal) => {
-  appStore.setOpenVertical(newVal); // Update the store whenever the prop changes
-});
+const showHandle = () => {
+   appStore.setOpenVertical(!isOpenVertical.value);
+}
+
+// watch(() => isOpenVertical.value, (newVal) => {
+//   appStore.setOpenVertical(newVal); // Update the store whenever the prop changes
+// });
 
 defineExpose({
   isOpen
@@ -46,8 +51,8 @@ defineExpose({
   <div id="vertical">
     <div
       class="fixed inset-0 transform transition-all"
-      v-if="isOpen && type == 'ipad'"
-      @click="isOpen = false"
+      v-if="isOpenVertical && type == 'ipad'"
+      @click="isOpenVertical = false"
     >
       <div class="absolute inset-0 bg-backdrop opacity-50"></div>
     </div>
@@ -55,7 +60,7 @@ defineExpose({
     <div
       class="w-[260px] h-full bg-white shadow-menu text-nav fixed left-0 top-0"
       id="menu-wrap"
-      :class="[isOpen ? 'open' : 'close', getId]"
+      :class="[isOpenVertical ? 'open' : 'close', getId]"
     >
       <div class="logo-details h-[60px] leading-[60px] flex items-center relative ml-4 mt-4">
       
@@ -63,15 +68,15 @@ defineExpose({
 
         <div
           class="logo_name text-black text-2xl font-semibold opacity-0 h-[60px] !leading-[60px]"
-        >CodingLab</div>
+        >MHStore</div>
 
         <Icon name="bx:menu-alt-right" 
-        id="btn-menu" @click="isOpen = !isOpen" v-if="isOpen"
+        id="btn-menu" @click="showHandle" v-if="isOpenVertical"
         class="bx text-black text-2xl w-6 h-6 !leading-[60px] absolute top-1/2 right-[30px] transform -translate-y-1/2"
          ></Icon >
 
          <Icon name="bx:menu" 
-        id="btn-menu" @click="isOpen = !isOpen" v-if="!isOpen"
+        id="btn-menu" @click="showHandle" v-if="!isOpenVertical"
         class="bx text-black text-2xl w-6 h-6 !leading-[60px] absolute top-1/2 right-[30px] transform -translate-y-1/2"
          ></Icon >
 

@@ -18,9 +18,7 @@ const hasMounted = ref(false);
 const isOpenVertical = computed(() => appStore.isOpenVertical);
 
 const handleClickMenu = () => {
-  if (menuRef.value) {
-    menuRef.value.isOpen = !menuRef.value.isOpen;
-  }
+  appStore.setOpenVertical(!isOpenVertical.value);
 };
 
 const containerClass = computed(() => {
@@ -35,8 +33,8 @@ onMounted(() => {
   <div v-if="hasMounted">
     <Vertical :type="device" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
     <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
-    <div class="container-wrap ml-auto transition-all duration-500 ease-in-out " :class="containerClass" >
-      <div class="p-3 sticky top-0 ">
+    <div class="container-wrap ml-auto transition-all duration-400 ease-in-out " :class="containerClass" >
+      <div class="p-4 sticky top-0 ">
         <MenuLogo :type="device" @clickMenu="handleClickMenu" />
         <!-- <div class="HorizontalMenu w-full relative top-[4rem] bg-bg_layout">
           <div class="ln-container"> -->
@@ -44,7 +42,7 @@ onMounted(() => {
           <!-- </div>
         </div> -->
       </div>
-      <div class="ln-container pt-5 px-3">
+      <div class="ln-container ">
           <slot></slot>
       </div>
     </div>
@@ -59,6 +57,9 @@ body {
   padding-left: 0rem;
   margin-left: auto;
   margin-right: auto;
+}
+.duration-400{
+  transition-duration: 450ms;
 }
 @media (min-width: 1400px) {
   .ln-container {
