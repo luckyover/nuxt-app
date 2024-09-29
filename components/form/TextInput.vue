@@ -47,7 +47,7 @@ watch(() => errors.value[props.name], (newValue) => {
 </script>
 
 <template>
-    <div class="">
+    <div class="mb-1">
       <label  class="block text-sm font-medium text-gray-700">{{ label }}</label>
       <input
         :type="type"

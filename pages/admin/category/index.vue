@@ -18,11 +18,11 @@ const data = ref({
         <h4 class="py-1 font-medium">Category</h4>
       </div>
       
-      <div class="card-body px-6 py-4">
-        <div class="mb-3 float-right"><Button class="px-4 pt-1 text-sm ">Save</Button></div>
+      <div class="card-body px-6 py-4 flex flex-col">
+        <div class="mb-3 text-right"><Button class="px-4 pt-1 text-sm ">Save</Button></div>
 
-        <div class="grid md:grid-cols-2 gap-2">
-          <div class="grid md:grid-cols-[200px_repeat(1,1fr)] gap-2">
+        <div class="grid md:grid-cols-2 gap-2 ">
+          <div class="grid md:grid-cols-[150px_repeat(1,1fr)] gap-2">
             <TextInput v-model="data.id" label="ID" name="id" type="text" />
             <TextInput v-model="data.slug" label="Slug" name="Slug" type="text" />
           </div>
