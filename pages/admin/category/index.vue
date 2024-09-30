@@ -20,7 +20,7 @@ const items = ref([
   { value: 6, text: "Hellen Schmidt" },
 ]);
 
-const selected = ref();
+const selected = ref({ value: 1, text: "Wade Cooper" });
 </script>
 <template>
   <Layout>
@@ -32,14 +32,19 @@ const selected = ref();
       <div class="card-body px-6 py-4 flex flex-col">
         <div class="mb-3 text-right">
           <Button type="button" class="px-4 xt-sm">Save</Button>
-          <Button variant="danger" type="button" class="px-4 xt-sm"
+          <Button variant="danger" type="button" class="px-4 ml-2 xt-sm"
             >Delete</Button
           >
         </div>
 
         <div class="grid md:grid-cols-2 gap-2">
-          <div class="grid md:grid-cols-[150px_repeat(1,1fr)] gap-2">
-            <TextInput v-model="data.id" label="ID" name="id" type="text" />
+          <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
+            <Autocomplete
+              v-model="selected"
+              :items="items"
+              label="ID"
+              :is-search="true"
+            ></Autocomplete>
             <TextInput
               v-model="data.slug"
               label="Slug"
@@ -63,13 +68,6 @@ const selected = ref();
             type="text"
           />
         </div>
-
-        <Autocomplete
-          v-model="selected"
-          placeholder="Choose..."
-          :items="items"
-          
-        ></Autocomplete>
       </div>
     </div>
   </Layout>
