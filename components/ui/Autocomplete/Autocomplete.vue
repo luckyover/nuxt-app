@@ -50,6 +50,17 @@ const emit = defineEmits<{
 const defaultValue = props.multiple ? [props.modelValue].filter(Boolean) : props.modelValue
 const selected = ref<ModelValue | ModelValue[]>(defaultValue)
 const query = ref('')
+const isFocused = ref(false)
+
+function onFocus() {
+  isFocused.value = true
+}
+
+function onBlur() {
+  isFocused.value = false
+}
+
+const isFocus =  computed(() => isFocused.value ? 'is-focus' : '');
 
 const filteredItems = computed(() =>
   query.value === ''
@@ -83,7 +94,8 @@ watch(selected, (val) => {
   <Combobox v-model="selected" :multiple="multiple">
     <div class="relative mt-1">
       <div
-        class="relative w-full border cursor-default overflow-hidden rounded-lg bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+      :class="isFocus"
+      class="relative w-full border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 border cursor-default overflow-hidden rounded-md bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
       >
         <ul v-if="multiple && (selected as ModelValue[])?.length > 0" class="flex flex-wrap gap-2 items-center mx-1.5 mt-1.5">
           <li v-for="(item, idx) in selected" :key="idx" class="rounded-lg flex items-center gap-2 shrink-0 bg-gray-100 pl-3 pr-2">
@@ -94,29 +106,31 @@ watch(selected, (val) => {
           </li>
         </ul>
         <ComboboxInput
-          class="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-          :display-value="(item) => (item as Item)?.[itemText]"
+        class="w-full border-none py-2 pl-2 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 focus:outline-none"
+        :display-value="(item) => (item as Item)?.[itemText]"
           :placeholder="placeholder"
           @change="query = $event.target.value"
+          @focus="onFocus"
+          @blur="onBlur"
         />
-        <div
+        <!-- <div
           class="absolute inset-y-0 right-0 flex items-center pr-2"
-        >
-          <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
+        > -->
+          <!-- <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
             <Icon
               name="heroicons:x-mark-20-solid"
               class="h-5 w-5 text-gray-400"
               aria-hidden="true"
             />
-          </button>
-          <ComboboxButton>
+          </button> -->
+          <!-- <ComboboxButton>
             <Icon
               name="heroicons:chevron-down-20-solid"
               class="h-5 w-5 text-gray-400"
               aria-hidden="true"
             />
-          </ComboboxButton>
-        </div>
+          </ComboboxButton> -->
+        <!-- </div> -->
       </div>
       <TransitionRoot
         leave="transition ease-in duration-100"
@@ -167,3 +181,9 @@ watch(selected, (val) => {
     </div>
   </Combobox>
 </template>
+<style scoped>
+  .is-focus{
+    border-color: rgb(59 130 246 / 1);
+    box-shadow: 0 0 0 0.3px rgb(59 130 246 / 1);
+  }
+</style>
