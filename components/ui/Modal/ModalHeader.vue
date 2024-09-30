@@ -14,7 +14,7 @@ const api = inject('modal')
 <template>
   <DialogTitle
     as="div"
-    class="flex gap-2 justify-between items-center px-4 pt-3"
+    class="flex gap-2 justify-between items-center px-4 py-1 border-b rounded-t"
   >
     <h3
       class="text-lg font-medium leading-6 text-gray-900"

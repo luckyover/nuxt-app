@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="px-4 py-3">
+  <div class="px-4 py-2 border-t">
     <slot />
   </div>
 </template>

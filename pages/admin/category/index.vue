@@ -4,6 +4,7 @@ import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
 import Button from "@/components/form/Button.vue";
 import Autocomplete from "@/components/ui/Autocomplete/Autocomplete.vue";
+import PopupCategory from "@/layers/modals/Category.vue";
 const data = ref({
   id: "",
   slug: "",
@@ -44,6 +45,7 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
               :items="items"
               label="ID"
               :is-search="true"
+              popup_name="Category"
             ></Autocomplete>
             <TextInput
               v-model="data.slug"
@@ -70,5 +72,8 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
         </div>
       </div>
     </div>
+
   </Layout>
+
+ 
 </template>
