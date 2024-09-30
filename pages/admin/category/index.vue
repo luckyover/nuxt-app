@@ -3,23 +3,35 @@ import { ref } from "vue";
 import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
 import Button from "@/components/form/Button.vue";
-
+import Autocomplete from "@/layers/ui/Autocomplete/Autocomplete.vue";
 const data = ref({
   id: "",
   slug: "",
   seo_title: "",
   meta_description: ""
 });
+
+const items = ref([
+  { value: 1, text: "Wade Cooper" },
+  { value: 2, text: "Arlene Mccoy" },
+  { value: 3, text: "Devon Webb" },
+  { value: 4, text: "Tom Cook" },
+  { value: 5, text: "Tanya Fox" },
+  { value: 6, text: "Hellen Schmidt" },
+]);
+
+const selected = ref();
+
 </script>
 <template>
   <Layout>
-    <div class="rounded-lg overflow-hidden shadow-lg bg-white flex flex-col">
-      <div class="card-title bg-gray-300 px-6">
+    <div class="rounded-lg  shadow-lg bg-white flex flex-col">
+      <div class="card-title rounded-t-lg bg-gray-300 px-6">
         <h4 class="py-1 font-medium">Category</h4>
       </div>
       
       <div class="card-body px-6 py-4 flex flex-col">
-        <div class="mb-3 text-right"><Button class="px-4 pt-1 text-sm ">Save</Button></div>
+        <div class="mb-3 text-right"><Button type="button" class="px-4 xt-sm ">Save</Button> <Button variant="danger" type="button" class="px-4 xt-sm ">Delete</Button></div>
 
         <div class="grid md:grid-cols-2 gap-2 ">
           <div class="grid md:grid-cols-[150px_repeat(1,1fr)] gap-2">
@@ -37,6 +49,12 @@ const data = ref({
             type="text"
           />
         </div>
+
+        <Autocomplete
+        v-model="selected"
+    placeholder="Choose..."
+    :items="items"
+        ></Autocomplete>
       </div>
     </div>
   </Layout>

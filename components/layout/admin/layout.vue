@@ -34,7 +34,7 @@ onMounted(() => {
     <Vertical :type="device" v-if="device != 'mobile'" ref="menuRef"> </Vertical>
     <!-- <MenuMobile :type="device" v-if="device == 'mobile'"> </MenuMobile>  -->
     <div class="container-wrap ml-auto transition-all duration-400 ease-in-out " :class="containerClass" >
-      <div class="p-4 sticky top-0 ">
+      <div class="py-4 sticky top-0 ln-container  ">
         <MenuLogo :type="device" @clickMenu="handleClickMenu" />
         <!-- <div class="HorizontalMenu w-full relative top-[4rem] bg-bg_layout">
           <div class="ln-container"> -->

@@ -24,7 +24,7 @@ export default {
         menu:'#384551',
         black:'#222',
         gray:{
-          100:'#566a7f',
+          // 100:'#566a7f',
         },
         backdrop:'#22303e',
 
