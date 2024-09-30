@@ -12,13 +12,27 @@ const props = withDefaults(
     modelValue?: boolean
     persistent?: boolean
     fullscreen?: boolean
+    title?: string
+    size?: string
   }>(),
   {
     modelValue: false,
     persistent: false,
     fullscreen: false,
+    title: '',
+    size:'xl'
   },
 )
+
+const sizeClass = computed(() => {
+    return {
+        'sm': 'sm:max-w-[50%]',
+        'md': 'sm:max-w-[60%]',
+        'lg': 'sm:max-w-[70%]',
+        'xl': 'sm:max-w-[80%]',
+        '2xl': 'sm:max-w-[90%]'
+    }[props.size]
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
@@ -61,51 +75,41 @@ provide('modal', api)
 <template>
   <ClientOnly>
     <slot name="activator" :open="openModal" :on="{ click: openModal }" />
-
-    <TransitionRoot appear :show="isOpen" as="template">
-      <Dialog as="div" class="relative z-10" @close="onModalClose">
-        <TransitionChild
-          as="template"
-          enter="duration-300 ease-out"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="duration-200 ease-in"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <div class="fixed inset-0 bg-black bg-opacity-25" />
-        </TransitionChild>
-
-        <div class="fixed inset-0 overflow-y-auto">
-          <div
-            class=" min-h-full"
-            :class="{
-              'px-6 py-7': !fullscreen,
-            }"
-          >
-            <TransitionChild
-             :v-if="isOpen"
-              as="template"
-              enter="duration-500 ease-out"
-              enter-from="opacity-0 scale-50"
-              enter-to="opacity-100 scale-100"
-              leave="duration-200 ease-in"
-              leave-from="opacity-100 scale-100"
-              leave-to="opacity-0 scale-50"
+     <Teleport to="body">
+        <div v-if="isOpen" class="main-popup fixed inset-0 px-3 py-6 z-[101]" scroll-region
             >
-              <DialogPanel
-                class="w-full transform overflow-hidden bg-white text-left align-middle shadow-xl transition-all mr-auto ml-auto"
-                :class="{
-                  'h-screen': fullscreen,
-                  'max-w-[70%] rounded-lg': !fullscreen,
-                }"
-              >
-                <slot />
-              </DialogPanel>
-            </TransitionChild>
-          </div>
+            <div class="fixed inset-0 transform transition-all" @click="onModalClose" >
+                <div class="absolute inset-0 bg-gray-500 opacity-25" />
+            </div>
+
+            <Transition enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
+                enter-to-class="opacity-100 translate-y-0 sm:scale-100" enter-active-class="ease-out duration-300"
+                leave-from-class="opacity-100 translate-y-0 sm:scale-100"
+                leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
+                leave-active-class="ease-in duration-500" appear>
+                <div v-if="isOpen"
+                    class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                    :class="sizeClass">
+                    <div class="relative w-full max-h-full">
+                        <div class="relative bg-white rounded-lg shadow dark:bg-main-dark">
+                            <div
+                                class="flex items-center justify-between p-4 md:p-2 border-b rounded-t dark:border-gray-500">
+                                <h3 class="font-semibold text-black dark:text-gray-300 px-3">{{ props.title }}</h3>
+                                <XMarkIcon @click="onModalClose"
+                                    class="size-5 cursor-pointer text-black dark:text-gray-300 hover:text-gray-500">
+                                </XMarkIcon>
+                            </div>
+                            <div class="p-4 md:p-5 overflow-y-auto max-h-[750px]">
+                                <slot name="body"></slot>
+                            </div>
+                            <div class="border-t rounded-b bg-gray-100 dark:bg-gray-600 dark:border-gray-500">
+                                <slot name="footer"></slot>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Transition>
         </div>
-      </Dialog>
-    </TransitionRoot>
+    </Teleport>
   </ClientOnly>
 </template>

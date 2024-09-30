@@ -32,8 +32,8 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
 
       <div class="card-body px-6 py-4 flex flex-col">
         <div class="mb-3 text-right">
-          <Button type="button" class="px-4 xt-sm">Save</Button>
-          <Button variant="danger" type="button" class="px-4 ml-2 xt-sm"
+          <Button type="button" class="px-4 text-sm">Save</Button>
+          <Button variant="danger" type="button" class="px-4 ml-2 text-sm"
             >Delete</Button
           >
         </div>
