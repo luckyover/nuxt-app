@@ -22,8 +22,6 @@ const items = ref([
   { value: 6, text: "Hellen Schmidt" },
 ]);
 
-const currentPage = ref(1);
-const pageSize = ref(20);
 const selected = ref({ value: 1, text: "Wade Cooper" });
 
 </script>
@@ -76,13 +74,8 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
         </div>
       </div>
     </div>
-    <Pagination 
-      :totalPages="100" 
-      v-model="currentPage" 
-      v-model:page-size = "pageSize"
-    />
-    <p>Current Page: {{ currentPage }}</p>
-    
+
+ 
   </Layout>
 
  

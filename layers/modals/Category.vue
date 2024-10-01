@@ -6,6 +6,10 @@ import VModalFooter from "@/components/ui/Modal/ModalFooter.vue";
 import VModalHeader from "@/components/ui/Modal/ModalHeader.vue";
 import CollapseSearch from "@/components/form/CollapseSearch.vue";
 import Button from "@/components/form/Button.vue";
+import Pagination from "@/components/ui/Pagination/Pagination.vue";
+
+const pageSize = ref({ value: 20, text: "20" });
+const currentPage = ref(9)
 </script>
 
 <template>
@@ -24,6 +28,11 @@ import Button from "@/components/form/Button.vue";
               </div>
             </template>
         </CollapseSearch>
+            <Pagination 
+      :totalPages="100" 
+      v-model="currentPage" 
+      v-model:page-size ="pageSize"
+    />
         Your payment has been successfully submitted. We've sent you an email with all of the details of your order.
     </template>
     <template #footer>

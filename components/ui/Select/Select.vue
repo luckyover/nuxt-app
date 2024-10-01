@@ -48,7 +48,17 @@ const emit = defineEmits(['update:modelValue', 'clear'])
 
 const { modelValue } = toRefs(props)
 
-const selected = ref<ModelValue>(modelValue!.value)
+// Helper function to match the selected value by 'value' property
+function findSelectedItem(value: ModelValue) {
+  if (Array.isArray(value)) {
+    return value.map(val => props.items.find(item => item.value === val.value) || null)
+  }
+  return props.items.find(item => item.value === value?.value) || null
+}
+
+// Initialize selected based on modelValue by looking it up in the items array
+const selected = ref<ModelValue>(findSelectedItem(modelValue!.value))
+
 
 watch(modelValue!, (val) => {
   selected.value = val
@@ -70,7 +80,7 @@ function clear() {
       <ListboxButton class="
           relative
           w-full
-          py-2
+          py-[0.4rem]
           pl-3
           pr-10
           text-left
@@ -97,7 +107,7 @@ function clear() {
         ]">
         <span class="block truncate">
           {{ multiple && selected ? `${(selected as SelectItem[])?.length} selected` : (selected as SelectItem)?.text ||
-  placeholder
+            placeholder
           }}
         </span>
 
@@ -139,11 +149,11 @@ function clear() {
             <div class="px-1">
               <li v-if="item.divider" class="border-b -mx-1 my-1" />
               <li v-else class="cursor-default select-none relative py-2 pr-4 rounded" :class="[
-                active ? 'bg-gray-100' : 'text-gray-900',
+                active ? 'bg-secondary-50' : 'text-secondary-800',
                 !hideCheckIcon ? 'pl-10' : 'pl-4',
               ]">
                 <span class="block truncate" :class="[
-                  selectedOption ? 'font-medium text-primary-500' : 'font-normal',
+                  selectedOption ? 'font-medium text-primary-400' : 'font-normal',
                 ]">
                   {{ item.text }}
                 </span>

@@ -1,99 +1,67 @@
 <template>
-   <div>
-      <label for="pageSize" class="mr-2">Page Size:</label>
-      <VSelect v-model="selectedPageSize"
-              placeholder="Choose..."
-              :items="pageSizes"></VSelect>
-    
+  <div class="flex items-end justify-between">
+    <div class="w-[100px]">
+      <label for="pageSize text-sm text-secondary-900" class="mr-2">Page Size:</label>
+      <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes"></VSelect>
     </div>
-  <div class="flex items-center">
-    <button 
-      @click="goToPage(1)" 
-      :disabled="currentPage === 1"
-      class="px-3 py-1 border rounded text-sm"
-    >
-      «
-    </button>
-
-    <button 
-      @click="goToPreviousPage"
-      :disabled="currentPage === 1"
-      class="px-3 py-1 border rounded text-sm"
-    >
-      ‹
-    </button>
-
-    <button 
-      v-if="currentPage - 1 > 1"
-      @click="goToPage(1)" 
-      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': 1 === currentPage }]"
-    >
-       1 
-    </button>
-
-    <button 
-      v-if="currentPage - 1 > 1"
-    
-      class="px-3 py-1 border rounded text-sm"
-    >
-       .... 
-    </button>
-
-    <button 
-      v-for="page in visiblePages" 
-      :key="page"
-      @click="goToPage(page)" 
-      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': page === currentPage }]"
-    >
-      {{ page }}
-    </button>
-
-    <button 
-      v-if="totalPages - 2 >= currentPage"
-    
-      class="px-3 py-1 border rounded text-sm"
-    >
-       .... 
-    </button>
-
-
-    <button 
-      v-if="currentPage != totalPages && totalPages - 2 >= currentPage"
-      @click="goToPage(totalPages)" 
-      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': totalPages === currentPage }]"
-    >
-      {{ totalPages }}
-    </button>
-
-
-
-    <button 
-      @click="goToNextPage"
-      :disabled="currentPage === totalPages"
-      class="px-3 py-1 border rounded text-sm"
-    >
-      ›
-    </button>
-
-    <button 
-      @click="goToPage(totalPages)" 
-      :disabled="currentPage === totalPages"
-      class="px-3 py-1 border rounded text-sm"
-    >
-      »
-    </button>
+    <div class="flex items-center">
+      <button
+        @click="goToPage(1)"
+        :disabled="currentPage === 1"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >«</button>
+      <button
+        @click="goToPreviousPage"
+        :disabled="currentPage === 1"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >‹</button>
+      <button
+        v-if="currentPage - 1 > 1"
+        @click="goToPage(1)"
+        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': 1 === currentPage }]"
+      >1</button>
+      <button
+        v-if="currentPage - 1 > 1"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >....</button>
+      <button
+        v-for="page in visiblePages"
+        :key="page"
+        @click="goToPage(page)"
+        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': page === currentPage }]"
+      >{{ page }}</button>
+      <button
+        v-if="totalPages - 2 >= currentPage"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >....</button>
+      <button
+        v-if="currentPage != totalPages && totalPages - 2 >= currentPage"
+        @click="goToPage(totalPages)"
+        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': totalPages === currentPage }]"
+      >{{ totalPages }}</button>
+      <button
+        @click="goToNextPage"
+        :disabled="currentPage === totalPages"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >›</button>
+      <button
+        @click="goToPage(totalPages)"
+        :disabled="currentPage === totalPages"
+        class="px-3 py-1 border rounded text-sm text-secondary-800"
+      >»</button>
+    </div>
   </div>
- 
+
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import VSelect from '@/components/ui/Select/Select.vue'
+import { ref, computed } from "vue";
+import VSelect from "@/components/ui/Select/Select.vue";
 // Props to pass into the component
 const props = defineProps({
   totalPages: {
     type: Number,
-    required: true,
+    required: true
   },
   // totalRecord: {
   //   type: Number,
@@ -101,25 +69,28 @@ const props = defineProps({
   // },
   modelValue: {
     type: Number,
-    required: true,
+    required: true
   },
   pageSize: {
-    type: Number,
-    required: true,
-  },
+    type: Object,
+    required: true
+  }
 });
 
-const emit = defineEmits(['update:modelValue', 'update:modelPageSize', 'changePage']);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:modelPageSize",
+  "changePage"
+]);
 
 const pageSizes = ref([
   { value: 20, text: "20" },
   { value: 50, text: "50" },
-  { value: 100, text: "100" },
+  { value: 100, text: "100" }
 ]);
 // Local states for pagination
 const currentPage = ref(props.modelValue);
 const selectedPageSize = ref(props.pageSize);
-
 
 // console.log('totalRecord:', props.totalRecord);
 
@@ -153,13 +124,13 @@ const goToNextPage = () => {
 };
 
 const emitUpdate = () => {
-  emit('update:modelValue', currentPage.value);
-  emit('changePage');
+  emit("update:modelValue", currentPage.value);
+  emit("changePage");
 };
 
 const onPageSizeChange = () => {
-  emit('changePage');
-}
+  emit("changePage");
+};
 </script>
 
 <style scoped>
