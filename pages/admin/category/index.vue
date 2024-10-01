@@ -4,7 +4,8 @@ import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
 import Button from "@/components/form/Button.vue";
 import Autocomplete from "@/components/ui/Autocomplete/Autocomplete.vue";
-import PopupCategory from "@/layers/modals/Category.vue";
+import Pagination from "@/components/ui/Pagination/Pagination.vue";
+
 const data = ref({
   id: "",
   slug: "",
@@ -21,7 +22,10 @@ const items = ref([
   { value: 6, text: "Hellen Schmidt" },
 ]);
 
+const currentPage = ref(1);
+const pageSize = ref(20);
 const selected = ref({ value: 1, text: "Wade Cooper" });
+
 </script>
 <template>
   <Layout>
@@ -72,8 +76,15 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
         </div>
       </div>
     </div>
-
+    <Pagination 
+      :totalPages="100" 
+      v-model="currentPage" 
+      v-model:page-size = "pageSize"
+    />
+    <p>Current Page: {{ currentPage }}</p>
+    
   </Layout>
 
  
+    
 </template>

@@ -102,10 +102,10 @@ function clear() {
         </span>
 
         <div class="absolute inset-y-0 right-3 flex gap-2 items-center">
-          <button v-if="multiple ? (selected as SelectItem[])?.length > 0 : selected" type="button" aria-label="Clear"
-            @click="clear" class="text-gray-500 hover:text-gray-700">
+          <!-- <button v-if="multiple ? (selected as SelectItem[])?.length > 0 : selected" type="button" aria-label="Clear"
+            @click="clear" class="text-gray-500 hover:text-gray-700 flex">
             <Icon name="heroicons:x-mark-20-solid" class="h-5 w-5" aria-hidden="true" />
-          </button>
+          </button> -->
           <span class="
             flex
             items-center

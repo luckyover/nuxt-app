@@ -1,276 +1,170 @@
 <template>
-  <div :class="ui.wrapper" v-bind="attrs">
-    <slot name="first" :on-click="onClickFirst">
-      <UButton
-        v-if="firstButton && showFirst"
-        :size="size"
-        :to="to?.(1)"
-        :disabled="!canGoFirstOrPrev || disabled"
-        :class="[ui.base, ui.rounded]"
-        v-bind="{ ...(ui.default.firstButton || {}), ...firstButton }"
-        :ui="{ rounded: '' }"
-        aria-label="First"
-        @click="onClickFirst"
-      />
-    </slot>
+   <div>
+      <label for="pageSize" class="mr-2">Page Size:</label>
+      <VSelect v-model="selectedPageSize"
+              placeholder="Choose..."
+              :items="pageSizes"></VSelect>
+    
+    </div>
+  <div class="flex items-center">
+    <button 
+      @click="goToPage(1)" 
+      :disabled="currentPage === 1"
+      class="px-3 py-1 border rounded text-sm"
+    >
+      «
+    </button>
 
-    <slot name="prev" :on-click="onClickPrev">
-      <UButton
-        v-if="prevButton"
-        :size="size"
-        :to="to?.(currentPage - 1)"
-        :disabled="!canGoFirstOrPrev || disabled"
-        :class="[ui.base, ui.rounded]"
-        v-bind="{ ...(ui.default.prevButton || {}), ...prevButton }"
-        :ui="{ rounded: '' }"
-        aria-label="Prev"
-        @click="onClickPrev"
-      />
-    </slot>
+    <button 
+      @click="goToPreviousPage"
+      :disabled="currentPage === 1"
+      class="px-3 py-1 border rounded text-sm"
+    >
+      ‹
+    </button>
 
-    <UButton
-      v-for="(page, index) of displayedPages"
-      :key="`${page}-${index}`"
-      :to="typeof page === 'number' ? to?.(page) : null"
-      :size="size"
-      :disabled="disabled"
-      :label="`${page}`"
-      v-bind="page === currentPage ? { ...(ui.default.activeButton || {}), ...activeButton } : { ...(ui.default.inactiveButton || {}), ...inactiveButton }"
-      :class="[{ 'pointer-events-none': typeof page === 'string', 'z-[1]': page === currentPage }, ui.base, ui.rounded]"
-      :ui="{ rounded: '' }"
-      @click="() => onClickPage(page)"
-    />
+    <button 
+      v-if="currentPage - 1 > 1"
+      @click="goToPage(1)" 
+      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': 1 === currentPage }]"
+    >
+       1 
+    </button>
 
-    <slot name="next" :on-click="onClickNext">
-      <UButton
-        v-if="nextButton"
-        :size="size"
-        :to="to?.(currentPage + 1)"
-        :disabled="!canGoLastOrNext || disabled"
-        :class="[ui.base, ui.rounded]"
-        v-bind="{ ...(ui.default.nextButton || {}), ...nextButton }"
-        :ui="{ rounded: '' }"
-        aria-label="Next"
-        @click="onClickNext"
-      />
-    </slot>
+    <button 
+      v-if="currentPage - 1 > 1"
+    
+      class="px-3 py-1 border rounded text-sm"
+    >
+       .... 
+    </button>
 
-    <slot name="last" :on-click="onClickLast">
-      <UButton
-        v-if="lastButton && showLast"
-        :size="size"
-        :to="to?.(pages.length)"
-        :disabled="!canGoLastOrNext || disabled"
-        :class="[ui.base, ui.rounded]"
-        v-bind="{ ...(ui.default.lastButton || {}), ...lastButton }"
-        :ui="{ rounded: '' }"
-        aria-label="Last"
-        @click="onClickLast"
-      />
-    </slot>
+    <button 
+      v-for="page in visiblePages" 
+      :key="page"
+      @click="goToPage(page)" 
+      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': page === currentPage }]"
+    >
+      {{ page }}
+    </button>
+
+    <button 
+      v-if="totalPages - 2 >= currentPage"
+    
+      class="px-3 py-1 border rounded text-sm"
+    >
+       .... 
+    </button>
+
+
+    <button 
+      v-if="currentPage != totalPages && totalPages - 2 >= currentPage"
+      @click="goToPage(totalPages)" 
+      :class="['px-3 py-1 border rounded text-sm', { 'bg-blue-500 text-white': totalPages === currentPage }]"
+    >
+      {{ totalPages }}
+    </button>
+
+
+
+    <button 
+      @click="goToNextPage"
+      :disabled="currentPage === totalPages"
+      class="px-3 py-1 border rounded text-sm"
+    >
+      ›
+    </button>
+
+    <button 
+      @click="goToPage(totalPages)" 
+      :disabled="currentPage === totalPages"
+      class="px-3 py-1 border rounded text-sm"
+    >
+      »
+    </button>
   </div>
+ 
 </template>
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
-import type { PropType } from 'vue'
-import type { RouteLocationRaw } from '#vue-router'
-import UButton from '../elements/Button.vue'
-import { useUI } from '../../composables/useUI'
-import { mergeConfig } from '../../utils'
-import type { Button, ButtonSize, DeepPartial, Strategy } from '../../types/index'
-// @ts-expect-error
-import appConfig from '#build/app.config'
-import { pagination, button } from '#ui/ui.config'
-
-const config = mergeConfig<typeof pagination>(appConfig.ui.strategy, appConfig.ui.pagination, pagination)
-const buttonConfig = mergeConfig<typeof button>(appConfig.ui.strategy, appConfig.ui.button, button)
-
-// Props
+import { ref, computed } from 'vue';
+import VSelect from '@/components/ui/Select/Select.vue'
+// Props to pass into the component
 const props = defineProps({
+  totalPages: {
+    type: Number,
+    required: true,
+  },
+  // totalRecord: {
+  //   type: Number,
+  //   required: true,
+  // },
   modelValue: {
     type: Number,
-    required: true
+    required: true,
   },
-  pageCount: {
+  pageSize: {
     type: Number,
-    default: 10
+    required: true,
   },
-  total: {
-    type: Number,
-    required: true
-  },
-  max: {
-    type: Number,
-    default: 7,
-    validator(value: number) {
-      return value >= 5 && value < Number.MAX_VALUE
-    }
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  size: {
-    type: String as PropType<ButtonSize>,
-    default: () => config.default.size,
-    validator(value: string) {
-      return Object.keys(buttonConfig.size).includes(value)
-    }
-  },
-  to: {
-    type: Function as PropType<(page: number) => RouteLocationRaw>,
-    default: null
-  },
-  activeButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.activeButton as Button
-  },
-  inactiveButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.inactiveButton as Button
-  },
-  showFirst: {
-    type: Boolean,
-    default: false
-  },
-  showLast: {
-    type: Boolean,
-    default: false
-  },
-  firstButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.firstButton as Button
-  },
-  lastButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.lastButton as Button
-  },
-  prevButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.prevButton as Button
-  },
-  nextButton: {
-    type: Object as PropType<Button>,
-    default: () => config.default.nextButton as Button
-  },
-  divider: {
-    type: String,
-    default: '…'
-  },
-  class: {
-    type: [String, Object, Array] as PropType<any>,
-    default: () => ''
-  },
-  ui: {
-    type: Object as PropType<DeepPartial<typeof config> & { strategy?: Strategy }>,
-    default: () => ({})
-  }
-})
+});
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:modelPageSize', 'changePage']);
 
-// Setup
-const { ui, attrs } = useUI('pagination', toRef(props, 'ui'), config, toRef(props, 'class'))
+const pageSizes = ref([
+  { value: 20, text: "20" },
+  { value: 50, text: "50" },
+  { value: 100, text: "100" },
+]);
+// Local states for pagination
+const currentPage = ref(props.modelValue);
+const selectedPageSize = ref(props.pageSize);
 
-const currentPage = computed({
-  get() {
-    return props.modelValue
-  },
-  set(value) {
-    emit('update:modelValue', value)
-  }
-})
 
-const pages = computed(() =>
-  Array.from({ length: Math.ceil(props.total / props.pageCount) }, (_, i) => i + 1)
-)
+// console.log('totalRecord:', props.totalRecord);
 
-const displayedPages = computed(() => {
-  const totalPages = pages.value.length
-  const current = currentPage.value
-  const maxDisplayedPages = Math.max(props.max, 5)
+const visiblePages = computed(() => {
+  const pages = [];
+  const startPage = Math.max(1, currentPage.value - 1);
+  const endPage = Math.min(props.totalPages, currentPage.value + 1);
 
-  const r = Math.floor((Math.min(maxDisplayedPages, totalPages) - 5) / 2)
-  const r1 = current - r
-  const r2 = current + r
-
-  const beforeWrapped = r1 - 1 > 1
-  const afterWrapped = r2 + 1 < totalPages
-
-  const items: Array<number | string> = []
-
-  if (totalPages <= maxDisplayedPages) {
-    for (let i = 1; i <= totalPages; i++) {
-      items.push(i)
-    }
-    return items
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
   }
 
-  items.push(1)
+  return pages;
+});
 
-  if (beforeWrapped) items.push(props.divider)
+const goToPage = (page: number) => {
+  currentPage.value = page;
+  emitUpdate();
+};
 
-  if (!afterWrapped) {
-    const addedItems = current + r + 2 - totalPages
-    for (let i = current - r - addedItems; i <= current - r - 1; i++) {
-      items.push(i)
-    }
+const goToPreviousPage = () => {
+  if (currentPage.value > 1) {
+    goToPage(currentPage.value - 1);
   }
+};
 
-  for (let i = Math.max(2, r1); i <= Math.min(totalPages, r2); i++) {
-    items.push(i)
+const goToNextPage = () => {
+  if (currentPage.value < props.totalPages) {
+    goToPage(currentPage.value + 1);
   }
+};
 
-  if (!beforeWrapped) {
-    const addedItems = 1 - (current - r - 2)
-    for (let i = current + r + 1; i <= current + r + addedItems; i++) {
-      items.push(i)
-    }
-  }
+const emitUpdate = () => {
+  emit('update:modelValue', currentPage.value);
+  emit('changePage');
+};
 
-  if (afterWrapped) items.push(props.divider)
-
-  if (r2 < totalPages) {
-    items.push(totalPages)
-  }
-
-  if (items.length >= 3 && items[1] === props.divider && items[2] === 3) {
-    items[1] = 2
-  }
-
-  if (items.length >= 3 && items[items.length - 2] === props.divider && items[items.length - 1] === items.length) {
-    items[items.length - 2] = items.length - 1
-  }
-
-  return items
-})
-
-const canGoFirstOrPrev = computed(() => currentPage.value > 1)
-const canGoLastOrNext = computed(() => currentPage.value < pages.value.length)
-
-function onClickFirst() {
-  if (!canGoFirstOrPrev.value) return
-  currentPage.value = 1
-}
-
-function onClickLast() {
-  if (!canGoLastOrNext.value) return
-  currentPage.value = pages.value.length
-}
-
-function onClickPage(page: number | string) {
-  if (typeof page === 'string') return
-  currentPage.value = page
-}
-
-function onClickPrev() {
-  if (!canGoFirstOrPrev.value) return
-  currentPage.value--
-}
-
-function onClickNext() {
-  if (!canGoLastOrNext.value) return
-  currentPage.value++
+const onPageSizeChange = () => {
+  emit('changePage');
 }
 </script>
+
+<style scoped>
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>
