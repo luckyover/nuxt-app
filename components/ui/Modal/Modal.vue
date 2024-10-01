@@ -91,18 +91,17 @@ provide('modal', api)
                     class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
                     :class="sizeClass">
                     <div class="relative w-full max-h-full">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-main-dark">
+                        <div class="relative bg-white rounded-lg shadow">
                             <div
-                                class="flex items-center justify-between p-4 md:p-2 border-b rounded-t dark:border-gray-500">
-                                <h3 class="font-semibold text-black dark:text-gray-300 px-3">{{ props.title }}</h3>
-                                <XMarkIcon @click="onModalClose"
-                                    class="size-5 cursor-pointer text-black dark:text-gray-300 hover:text-gray-500">
-                                </XMarkIcon>
+                                class="flex items-center justify-between p-4 md:p-2 border-b rounded-t ">
+                                <h3 class="font-semibold text-black  px-3">{{ props.title }}</h3>
+                              
+                                <Icon name="mdi:close"  @click="onModalClose"   class="size-5 cursor-pointer text-black  hover:text-gray-500"></Icon>
                             </div>
                             <div class="p-4 md:p-5 overflow-y-auto max-h-[750px]">
                                 <slot name="body"></slot>
                             </div>
-                            <div class="border-t rounded-b bg-gray-100 dark:bg-gray-600 dark:border-gray-500">
+                            <div class="border-t rounded-b bg-gray-100">
                                 <slot name="footer"></slot>
                             </div>
                         </div>
