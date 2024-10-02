@@ -176,3 +176,15 @@ function clear() {
     </div>
   </Listbox>
 </template>
+
+<style scoped>
+.is-focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(170 171 255 / var(--tw-ring-opacity));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-border-opacity: 1;
+  border-color: rgb(105 107 255 / var(--tw-border-opacity));
+}
+</style>
