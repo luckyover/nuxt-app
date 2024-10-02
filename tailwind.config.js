@@ -73,6 +73,7 @@ export default {
       fontSize:{
         'ss':'12px',
         's3':'13px',
+        's4':'14px',
         's7':'17px',
         's5':'15px',
       },

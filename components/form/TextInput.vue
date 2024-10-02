@@ -48,7 +48,7 @@ watch(() => errors.value[props.name], (newValue) => {
 
 <template>
     <div class="mb-1">
-      <label  class="block text-sm font-medium text-gray-700">{{ label }}</label>
+      <label  class="block text-s4  text-secondary-900">{{ label }}</label>
       <input
         :type="type"
         v-model="model"
@@ -58,7 +58,7 @@ watch(() => errors.value[props.name], (newValue) => {
         :autocomplete="autocomplete"
         ref="inputRef" 
       />
-      <span v-if="errors[name]" class="text-red-600 text-sm">{{ errors[name][0] }}</span>
+      <span v-if="errors[name]" class="text-red-600 text-s4">{{ errors[name][0] }}</span>
      
     </div>
   </template>
