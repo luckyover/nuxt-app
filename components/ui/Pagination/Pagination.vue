@@ -1,53 +1,53 @@
 <template>
   <div class="flex items-end justify-between">
     <div class="w-[100px]">
-      <label for="pageSize text-sm text-secondary-900" class="mr-2">Page Size:</label>
+      <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
       <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes"></VSelect>
     </div>
     <div class="flex items-center">
       <button
         @click="goToPage(1)"
         :disabled="currentPage === 1"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >«</button>
       <button
         @click="goToPreviousPage"
         :disabled="currentPage === 1"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >‹</button>
       <button
         v-if="currentPage - 1 > 1"
         @click="goToPage(1)"
-        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': 1 === currentPage }]"
+        :class="['px-3 py-1 border rounded text-s4 text-secondary-800', { 'bg-primary-400 text-white': 1 === currentPage }]"
       >1</button>
       <button
         v-if="currentPage - 1 > 1"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >....</button>
       <button
         v-for="page in visiblePages"
         :key="page"
         @click="goToPage(page)"
-        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': page === currentPage }]"
+        :class="['px-3 py-1 border rounded text-s4 text-secondary-800', { 'bg-primary-400 text-white': page === currentPage }]"
       >{{ page }}</button>
       <button
         v-if="totalPages - 2 >= currentPage"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >....</button>
       <button
         v-if="currentPage != totalPages && totalPages - 2 >= currentPage"
         @click="goToPage(totalPages)"
-        :class="['px-3 py-1 border rounded text-sm text-secondary-800', { 'bg-primary-400 text-white': totalPages === currentPage }]"
+        :class="['px-3 py-1 border rounded text-s4 text-secondary-800', { 'bg-primary-400 text-white': totalPages === currentPage }]"
       >{{ totalPages }}</button>
       <button
         @click="goToNextPage"
         :disabled="currentPage === totalPages"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >›</button>
       <button
         @click="goToPage(totalPages)"
         :disabled="currentPage === totalPages"
-        class="px-3 py-1 border rounded text-sm text-secondary-800"
+        class="px-3 py-1 border rounded text-s4 text-secondary-800"
       >»</button>
     </div>
   </div>

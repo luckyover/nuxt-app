@@ -33,7 +33,7 @@ export default {
           100:'#cdccff',
           200:'#aaabff',
           300:'#8589ff',
-          400:'#696bff',  //acive
+          400:'#696bff',  //acive ,focus
           500:'#4f4dfb',  //chinh
           600:'#4a43ef',
           700:'#4137e2',
@@ -51,6 +51,9 @@ export default {
           700:'#465367',
           800:'#374151', //text
           900:'#252d3a', //title
+        },
+        wh:{
+          100:'#fafafa'
         }
 
       },
@@ -85,7 +88,7 @@ export default {
         '3d': 'translate3d(0, 0, 0)',
       },
       fontFamily: {
-        'public-sans': ['Public Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+        sans: ['Roboto', 'sans-serif'], // Thêm font Roboto
       },
       gridTemplateColumns: {
         'product_card': '10% 1fr',

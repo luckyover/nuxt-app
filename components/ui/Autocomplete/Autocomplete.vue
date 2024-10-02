@@ -118,12 +118,12 @@ watch(selected, (val) => {
 
 <template>
   <div>
-    <label class="block text-sm font-medium text-gray-700">{{ label }}</label>
+    <label class="block text-s4 text-secondary-800">{{ label }}</label>
     <Combobox v-model="selected" :multiple="multiple">
       <div class="relative mt-1">
         <div
           :class="isFocus"
-          class="relative w-full border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 border cursor-default overflow-hidden rounded-md bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+          class="relative w-full border-gray-300 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 border cursor-default overflow-hidden rounded-md bg-white text-left shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
         >
           <ul
             v-if="multiple && (selected as ModelValue[])?.length > 0"
@@ -235,7 +235,12 @@ watch(selected, (val) => {
 </template>
 <style scoped>
 .is-focus {
-  border-color: rgb(59 130 246 / 1);
-  box-shadow: 0 0 0 0.3px rgb(59 130 246 / 1);
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(170 171 255 / var(--tw-ring-opacity));
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-border-opacity: 1;
+  border-color: rgb(105 107 255 / var(--tw-border-opacity));
 }
 </style>

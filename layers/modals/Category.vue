@@ -5,7 +5,7 @@ import VModalBody from "@/components/ui/Modal/ModalBody.vue";
 import VModalFooter from "@/components/ui/Modal/ModalFooter.vue";
 import VModalHeader from "@/components/ui/Modal/ModalHeader.vue";
 import CollapseSearch from "@/components/form/CollapseSearch.vue";
-import Button from "@/components/form/Button.vue";
+import VButton from "@/components/form/Button.vue";
 import Pagination from "@/components/ui/Pagination/Pagination.vue";
 
 const pageSize = ref({ value: 20, text: "20" });
@@ -37,7 +37,7 @@ const currentPage = ref(9)
     </template>
     <template #footer>
         <div class="flex justify-end p-2">
-          <Button type="button" class="px-4 text-sm">Search</Button>
+          <VButton type="button" class="px-4 text-s4">Search</VButton>
         </div>   
      </template>
 

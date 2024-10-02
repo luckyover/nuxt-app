@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
-import Button from "@/components/form/Button.vue";
+import VButton from "@/components/form/Button.vue";
 import Autocomplete from "@/components/ui/Autocomplete/Autocomplete.vue";
 import Pagination from "@/components/ui/Pagination/Pagination.vue";
 
@@ -27,16 +27,16 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
 </script>
 <template>
   <Layout>
-    <div class="rounded-lg shadow-lg bg-white flex flex-col">
-      <div class="card-title rounded-t-lg bg-gray-300 px-6">
-        <h4 class="py-1 font-medium">Category</h4>
+    <div class="rounded-lg shadow-md shadow-primary-300 bg-white flex flex-col">
+      <div class="card-title rounded-t-lg bg-primary-300 px-6">
+        <h4 class="py-1 text-s4  text-wh-100">Category</h4>
       </div>
 
       <div class="card-body px-6 py-4 flex flex-col">
         <div class="mb-3 text-right">
-          <Button type="button" class="px-4 text-sm">Save</Button>
-          <Button variant="danger" type="button" class="px-4 ml-2 text-sm"
-            >Delete</Button
+          <VButton type="button" class="px-4 text-s4">Save</VButton>
+          <VButton variant="danger" type="button" class="px-4 ml-2 text-s4"
+            >Delete</VButton
           >
         </div>
 

@@ -37,7 +37,7 @@ const fetchLogout = async () => {
 <template>
   <!-- Layout wrapper -->
   <nav
-    class="rounded-md transition-all duration-500 ease-in-out z-50 layout-navbar w-full justify-start navbar h-16 flex sticky inset-x-0 inset-y-0 bg-bg_layout text-nav py-1"
+    class="rounded-md transition-all  shadow-md shadow-primary-200 duration-500 ease-in-out z-50 layout-navbar w-full justify-start navbar h-16 flex sticky inset-x-0 inset-y-0 bg-bg_layout text-nav py-1"
     id="layout-navbar"
   >
     <div

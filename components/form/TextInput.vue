@@ -35,7 +35,7 @@ const {errors} = storeToRefs(appStore);
 const inputClasses = computed(() => {
     return `mt-1 block w-full p-1 pl-2 border rounded-md 
            ${errors.value[props.name] ? 'border-red-600' : 'border-gray-300'} 
-           focus:border-blue-500 focus:ring-1 focus:ring-blue-200 focus:outline-none`;
+           focus:border-primary-400 focus:ring-1 focus:ring-primary-200 focus:outline-none`;
 });
 
 watch(() => errors.value[props.name], (newValue) => {
@@ -48,7 +48,7 @@ watch(() => errors.value[props.name], (newValue) => {
 
 <template>
     <div class="mb-1">
-      <label  class="block text-s4  text-secondary-900">{{ label }}</label>
+      <label  class="block text-s4  text-secondary-800">{{ label }}</label>
       <input
         :type="type"
         v-model="model"

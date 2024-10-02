@@ -101,7 +101,7 @@ function clear() {
             : 'bg-white',
           {
             'text-xs': small,
-            'text-sm': !small && !large,
+            'text-s4': !small && !large,
             'text-lg': large,
           }
         ]">
@@ -142,7 +142,7 @@ function clear() {
             max-h-60
             ring-1 ring-black ring-opacity-5
             focus:outline-none
-            sm:text-sm
+            sm:text-s4
           ">
           <ListboxOption v-for="item in items" v-slot="{ active, selected: selectedOption }" :key="item.text"
             :value="item" as="template">

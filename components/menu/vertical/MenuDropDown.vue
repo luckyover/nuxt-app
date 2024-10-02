@@ -58,7 +58,7 @@ defineExpose({
     </div>
 
     <div
-      class="w-[260px] h-full bg-white shadow-menu text-nav fixed left-0 top-0"
+      class="w-[260px] h-full bg-white shadow-lg shadow-primary-200 text-nav fixed left-0 top-0"
       id="menu-wrap"
       :class="[isOpenVertical ? 'open' : 'close', getId]"
     >

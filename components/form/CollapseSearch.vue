@@ -22,10 +22,10 @@ const classIcon = computed (()=>{
         <div class="text-white cursor-pointer flex ml-[-3px]" @click="toggleCollapse">
             <Icon :name="classIcon" class="size-7 bg-black"></Icon>
         </div>
-        <div class="text-sm pl-2 ">Advanced Search</div>
+        <div class="text-s4 pl-2 text-secondary-800 ">Advanced Search</div>
     </div>
 
-    <div class="wrapper-content grid duration-500 ease-out mt-2 "
+    <div class="wrapper-content grid duration-500 ease-out mt-2 text-s4 text-secondary-800 "
         :class="isOpen ? 'is-open grid-rows-[1fr]' : 'grid-rows-[0fr]'">
         <div class="overflow-hidden bg-gray-100 rounded ">
             <div class="px-3 py-2">
