@@ -53,7 +53,7 @@ export default {
           900:'#252d3a', //title
         },
         wh:{
-          100:'#fafafa'
+          100:'#ffffff'
         }
 
       },
