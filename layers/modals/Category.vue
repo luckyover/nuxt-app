@@ -8,7 +8,7 @@ import CollapseSearch from "@/components/form/CollapseSearch.vue";
 import VButton from "@/components/form/Button.vue";
 import Pagination from "@/components/ui/Pagination/Pagination.vue";
 
-const pageSize = ref({ value: 20, text: "20" });
+const pageSize = ref(20);
 const currentPage = ref(9)
 </script>
 

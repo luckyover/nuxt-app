@@ -134,7 +134,7 @@ watch(selected, (val) => {
               :key="idx"
               class="rounded-lg flex items-center gap-2 shrink-0 bg-gray-100 pl-3 pr-2"
             >
-              <span class="text-sm">{{ (item as Item)[itemText] }}</span>
+              <span class="text-sm">{{ (item as Item)[itemValue] }}</span>
               <button
                 title="Remove item"
                 class="text-lg rounded-full text-gray-500 hover:text-gray-700"
@@ -147,7 +147,7 @@ watch(selected, (val) => {
           </ul>
           <ComboboxInput
             class="w-full border-none h-[32px] py-2 pl-2 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 focus:outline-none"
-            :display-value="(item) => (item as Item)?.[itemText]"
+            :display-value="(item) => (item as Item)?.[itemValue]"
             :placeholder="placeholder"
             @change="query = $event.target.value"
             @focus="onFocus"

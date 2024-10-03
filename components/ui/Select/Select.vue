@@ -8,7 +8,7 @@ import {
 } from '@headlessui/vue'
 import type { SelectItem } from './types'
 
-type ModelValue = SelectItem | SelectItem[] | null | undefined
+type ModelValue = SelectItem | SelectItem[] | null | undefined | String
 
 const props = defineProps({
   modelValue: {
@@ -50,10 +50,10 @@ const { modelValue } = toRefs(props)
 
 // Helper function to match the selected value by 'value' property
 function findSelectedItem(value: ModelValue) {
-  if (Array.isArray(value)) {
-    return value.map(val => props.items.find(item => item.value === val.value) || null)
-  }
-  return props.items.find(item => item.value === value?.value) || null
+  // if (Array.isArray(value)) {
+  //   return value.map(val => props.items.find(item => item.value === val.value) || null)
+  // }
+  return props.items.find(item => item.value === value) || null
 }
 
 // Initialize selected based on modelValue by looking it up in the items array
