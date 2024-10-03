@@ -85,8 +85,16 @@ const datax = [
   }
 ]
 
-const headers = ['#', 'Customer', 'Check-In', 'Checkout', 'Booked', 'Total Payout', 'Status', '']
-const widths = ['5%', '20%', '10%', '10%', '15%', '15%', '10%', '5%']
+const headers = [
+  {name:'id',column:'#',type:'text',width:'5%'},
+  {name:'customer',column:'Customer',type:'text',width:'10%'},
+  {name:'checkIn',column:'Check-In',type:'text',width:'10%'},
+  {name:'checkout',column:'Checkout',type:'text',width:'10%'},
+  {name:'booked',column:'Booked',type:'text',width:'10%'},
+  {name:'totalPayout',column:'Total Payout',type:'text',width:'10%'},
+  {name:'status',column:'Status',type:'status',width:'10%'},
+  {name:'',column:'Actions',type:'action',width:'5%'},
+]
 
 </script>
 <template>

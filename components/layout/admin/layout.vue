@@ -83,4 +83,7 @@ body {
   overflow: hidden;
   white-space: nowrap;
 }
+body{
+  overflow: hidden;
+}
 </style>
