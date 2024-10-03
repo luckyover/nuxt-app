@@ -21,6 +21,34 @@ withDefaults(
     items: () => [],
   },
 )
+
+const dropdownRef = ref<HTMLElement | null>(null)
+
+const checkDropdownPosition = () => {
+  if (dropdownRef.value) {
+    const dropdownRect = dropdownRef.value.getBoundingClientRect()
+
+    // Check if the dropdown is going out of the viewport on the right side
+    if (dropdownRect.right > window.innerWidth) {
+      dropdownRef.value.style.left = 'auto'
+      dropdownRef.value.style.right = '0'
+    }
+
+    // Check if the dropdown is going out of the viewport on the bottom side
+    if (dropdownRect.bottom > window.innerHeight) {
+      dropdownRef.value.style.top = 'auto'
+      dropdownRef.value.style.bottom = '100%'
+    }
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', checkDropdownPosition)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkDropdownPosition)
+})
 </script>
 
 <template>
@@ -47,6 +75,7 @@ withDefaults(
       leave-to-class="transform scale-95 opacity-0"
     >
       <MenuItems
+        ref="dropdownRef"
         class="
           absolute
           z-10
