@@ -82,7 +82,359 @@ const datax = [
     totalPayout: "$130.40",
     status: "Upcoming",
     avatar: "https://via.placeholder.com/150"
-  }
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
+  {
+    id: "#3942",
+    customer: "Jerome Bell",
+    guests: 2,
+    checkIn: "Sep 28, 5 PM",
+    checkout: "Sep 30, 7 PM",
+    booked: "Sep 20, 2024, 1:45 PM",
+    totalPayout: "$130.40",
+    status: "Upcoming",
+    avatar: "https://via.placeholder.com/150"
+  },
 ]
 
 const headers = [
@@ -139,7 +491,7 @@ const headers = [
             type="text"
           />
         </div>
-        <VTable :data="datax" :headers="headers" :widths="widths"></VTable>
+        <VTable :data="datax" :headers="headers"></VTable>
       </template>
      
     </VCard>

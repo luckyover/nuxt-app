@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
+  extends: [
+    'layers/modals',
+    'layers/ui'
+  ],
   css: [
     '@/assets/main.scss', // This will include the Tailwind and custom SCSS globally
   ],
@@ -25,6 +29,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-headlessui',
     '@nuxt/icon',
+    '@headlessui-float/nuxt'
   ],
   routeRules: {
     '/admin/**': { appMiddleware: 'auth-admin' },

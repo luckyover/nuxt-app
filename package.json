@@ -10,6 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.11",
+    "@headlessui-float/nuxt": "^0.15.0",
+    "@headlessui/vue": "^1.7.23",
     "@nuxt/icon": "^1.5.1",
     "@nuxt/image": "^1.8.0",
     "@nuxtjs/pwa": "^3.1.2",
