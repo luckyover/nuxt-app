@@ -2,6 +2,7 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
 import type { DropdownItemProps } from './types'
 import DropdownItem from './DropdownItem.vue'
+import {onMounted,onUnmounted} from 'vue'
 withDefaults(
   defineProps<{
     modelValue?: boolean
@@ -21,13 +22,25 @@ withDefaults(
   },
 )
 
+const handleScroll = () => {
+  console.log('Window is scrolling...');
+};
+
+onMounted(() => {
+  document.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('scroll', handleScroll);
+});
+
 </script>
 
 <template>
   <Menu as="div" class="relative inline-block text-left">
     <Float 
       portal
-      :allowed-placements="['top', 'bottom', 'left', 'right']"
+      flip
       enter="transition duration-200 ease-out"
       enter-from="scale-95 opacity-0"
       enter-to="scale-100 opacity-100"
@@ -48,6 +61,17 @@ withDefaults(
       </slot>
     </div>
       <MenuItems
+      class="
+         z-10
+          p-1
+          w-56
+          mt-2
+          origin-top-right
+          bg-white
+          rounded-md
+          shadow-lg
+          ring-1 ring-black ring-opacity-5
+          focus:outline-none"
       >
         <slot>
           <DropdownItem v-for="item in items" :key="item.text" v-bind="item" />
