@@ -1,44 +1,56 @@
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
-import type { DropdownItemProps } from './types'
-import DropdownItem from './DropdownItem.vue'
-import {onMounted,onUnmounted} from 'vue'
+import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
+import type { DropdownItemProps } from "./types";
+import DropdownItem from "./DropdownItem.vue";
+import { onMounted, onUnmounted, nextTick, ref } from "vue";
+import { usePosition } from "@/composables/position";
+const { getScrollableParent } = usePosition();
+
 withDefaults(
   defineProps<{
-    modelValue?: boolean
-    btnProps?: Record<string, any>
-    label?: string
-    right?: boolean
-    items?: DropdownItemProps[]
+    modelValue?: boolean;
+    btnProps?: Record<string, any>;
+    label?: string;
+    right?: boolean;
+    items?: DropdownItemProps[];
   }>(),
   {
     modelValue: false,
     btnProps: () => ({
-      variant: 'secondary',
+      variant: "secondary",
     }),
-    label: 'Options',
+    label: "Options",
     right: false,
     items: () => [],
-  },
-)
+  }
+);
 
-const handleScroll = () => {
-  console.log('Window is scrolling...');
+const menu_drop = ref(null);
+const isOpen = ref(false);
+
+const onScroll = () => {
+  isOpen.value = false;
 };
 
 onMounted(() => {
-  document.addEventListener('scroll', handleScroll);
+  nextTick().then(() => {
+    if (menu_drop.value.$el) {
+      const el = getScrollableParent(menu_drop.value.$el);
+
+      el?.addEventListener("scroll", onScroll);
+    }
+  });
 });
 
 onUnmounted(() => {
-  document.removeEventListener('scroll', handleScroll);
+  const el = getScrollableParent(menu_drop.value);
+  el?.removeEventListener("scroll", onScroll);
 });
-
 </script>
 
 <template>
-  <Menu as="div" class="relative inline-block text-left">
-    <Float 
+  <Menu as="div" class="relative inline-block text-left" ref="menu_drop">
+    <Float
       portal
       flip
       enter="transition duration-200 ease-out"
@@ -48,8 +60,8 @@ onUnmounted(() => {
       leave-from="scale-100 opacity-100"
       leave-to="scale-95 opacity-0"
     >
-    <div>
-      <slot name="activator" :btn-props="btnProps" :label="label">
+      <div>
+        <slot name="activator" :btn-props="btnProps" :label="label">
         <MenuButton as="button" class="text-sm" v-bind="btnProps">
           {{ label }}
           <Icon
@@ -59,19 +71,10 @@ onUnmounted(() => {
           />
         </MenuButton>
       </slot>
-    </div>
+      </div>
       <MenuItems
-      class="
-         z-10
-          p-1
-          w-56
-          mt-2
-          origin-top-right
-          bg-white
-          rounded-md
-          shadow-lg
-          ring-1 ring-black ring-opacity-5
-          focus:outline-none"
+      :open="isOpen" 
+        class="z-10 p-1 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         <slot>
           <DropdownItem v-for="item in items" :key="item.text" v-bind="item" />
@@ -79,5 +82,4 @@ onUnmounted(() => {
       </MenuItems>
     </Float>
   </Menu>
- 
 </template>

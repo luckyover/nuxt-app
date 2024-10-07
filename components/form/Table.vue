@@ -32,6 +32,7 @@
             >{{ booking[header.name] }}</span>
 
             <span v-if="header.type == 'action'">
+          
               <VDropdown right>
                 <template #activator>
                   <VDropdownButton :as="VButton" color="primary">
@@ -43,6 +44,7 @@
                 <!-- <VDropdownItem divider />
                 <VDropdownItem icon="ic:round-delete">Delete</VDropdownItem> -->
               </VDropdown>
+             
             </span>
           </td>
         </tr>
@@ -56,6 +58,7 @@ import { defineProps } from "vue";
 import VDropdown from "@/components/ui/Dropdown/Dropdown.vue";
 import VDropdownItem from "@/components/ui/Dropdown/DropdownItem.vue";
 import VDropdownButton from "@/components/ui/Dropdown/DropdownButton.vue";
+import VButton from "@/components/form/Button.vue";
 // Define the props the component will accept
 const props = defineProps({
   data: {
