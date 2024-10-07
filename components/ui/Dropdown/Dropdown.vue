@@ -28,28 +28,44 @@ withDefaults(
 const menu_drop = ref(null);
 const isOpen = ref(false);
 
+  const closeRef = ref(null); // Tạo ref để lưu hàm close
+
+    // Hàm để lưu hàm close vào ref
+    const initializeClose = (close) => {
+      if (close && !closeRef.value) { // Chỉ lưu nếu hàm close chưa được lưu
+        closeRef.value = close;
+      }
+      return true; // Điều kiện để v-if luôn là true
+    };
+
+
 const onScroll = () => {
-  isOpen.value = false;
+  if (closeRef.value) {
+    closeRef.value(); // Gọi hàm close từ ref khi cuộn
+  }
 };
 
 onMounted(() => {
   nextTick().then(() => {
+      console.log(menu_drop);
+  
     if (menu_drop.value.$el) {
       const el = getScrollableParent(menu_drop.value.$el);
-
       el?.addEventListener("scroll", onScroll);
     }
   });
 });
 
 onUnmounted(() => {
+
   const el = getScrollableParent(menu_drop.value);
   el?.removeEventListener("scroll", onScroll);
 });
 </script>
 
 <template>
-  <Menu as="div" class="relative inline-block text-left" ref="menu_drop">
+  <Menu as="div" class="relative inline-block text-left" ref="menu_drop" v-slot="{ close,open }" >
+    <template v-if="initializeClose(close)" />
     <Float
       portal
       flip
@@ -73,7 +89,6 @@ onUnmounted(() => {
       </slot>
       </div>
       <MenuItems
-      :open="isOpen" 
         class="z-10 p-1 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         <slot>
