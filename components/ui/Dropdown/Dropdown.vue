@@ -4,6 +4,7 @@ import type { DropdownItemProps } from "./types";
 import DropdownItem from "./DropdownItem.vue";
 import { onMounted, onUnmounted, nextTick, ref } from "vue";
 import { usePosition } from "@/composables/position";
+import {useScrollParent} from '@/composables/useScrollParent';
 const { getScrollableParent } = usePosition();
 
 withDefaults(
@@ -40,32 +41,23 @@ const isOpen = ref(false);
 
 
 const onScroll = () => {
-  if (closeRef.value) {
-    closeRef.value(); // Gọi hàm close từ ref khi cuộn
-  }
+ const test = menu_drop.value.$slots.open;
+ console.log(test);
+ 
+
+  // if (closeRef.value) {
+  //   closeRef.value(); // Gọi hàm close từ ref khi cuộn
+  // }
 };
 
-onMounted(() => {
-  nextTick().then(() => {
-      console.log(menu_drop);
-  
-    if (menu_drop.value.$el) {
-      const el = getScrollableParent(menu_drop.value.$el);
-      el?.addEventListener("scroll", onScroll);
-    }
-  });
-});
+useScrollParent(menu_drop,onScroll)
 
-onUnmounted(() => {
-
-  const el = getScrollableParent(menu_drop.value);
-  el?.removeEventListener("scroll", onScroll);
-});
 </script>
 
 <template>
   <Menu as="div" class="relative inline-block text-left" ref="menu_drop" v-slot="{ close,open }" >
     <template v-if="initializeClose(close)" />
+   
     <Float
       portal
       flip
