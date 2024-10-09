@@ -41,13 +41,9 @@ const isOpen = ref(false);
 
 
 const onScroll = () => {
- const test = menu_drop.value.$slots.open;
- console.log(test);
- 
-
-  // if (closeRef.value) {
-  //   closeRef.value(); // Gọi hàm close từ ref khi cuộn
-  // }
+  if (closeRef.value) {
+    closeRef.value(); // Gọi hàm close từ ref khi cuộn
+  }
 };
 
 useScrollParent(menu_drop,onScroll)

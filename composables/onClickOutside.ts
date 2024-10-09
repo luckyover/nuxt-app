@@ -1,21 +1,28 @@
-// useClickOutside.js
-import { ref, unref } from 'vue'
-import { useEventListener } from '@/composables/useEventListener'
+import { ref, unref } from 'vue';
+import { useEventListener } from '@/composables/useEventListener';
 
-export function useClickOutside(target, callback) {
-  const targetRef = ref(target)
+export function useClickOutside(
+  target: HTMLElement | { $el: HTMLElement | null } | null,
+  callback: (event: MouseEvent) => void
+) {
+  const targetRef = ref(target);
 
-  // Hàm kiểm tra nếu nhấp chuột bên ngoài phần tử
-  const onClick = (event) => {
-    const el = unref(targetRef)
-    if (el && !el.contains(event.target)) {
-      callback(event)
+  // Function to check if the click is outside the element
+  const onClick = (event: Event) => {
+    const el = unref(targetRef);
+    
+    // If el is an object, use its $el property; otherwise, use el directly
+    const element = el instanceof HTMLElement ? el : el?.$el;
+
+    // Check if the element is valid and if the click target is outside of it
+    if (element && !element.contains(event.target as Node)) {
+      callback(event as MouseEvent); // Type assertion here
     }
-  }
+  };
 
-  // Sử dụng useEventListener để lắng nghe sự kiện click
-  useEventListener(document, 'click', onClick)
+  // Use useEventListener to listen for click events on the document
+  useEventListener(document, 'click', onClick);
 
-  // Trả về targetRef nếu cần truy cập bên ngoài
-  return targetRef
+  // Return targetRef if external access is needed
+  return targetRef;
 }

@@ -2,10 +2,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  extends: [
-    'layers/modals',
-    'layers/ui'
-  ],
   css: [
     '@/assets/main.scss', // This will include the Tailwind and custom SCSS globally
   ],
@@ -18,7 +14,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'stylesheet', href: '<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet"' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap' }
       ]
     }
   },

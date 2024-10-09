@@ -34,28 +34,39 @@
   // useScrollParent.js
   import { ref, unref } from 'vue';
   import { useEventListener } from '@/composables/useEventListener';
-  
-  export function useScrollParent(target, callback) {
+  type TargetType = HTMLElement | { $el: HTMLElement | null };
+
+  export function useScrollParent(target: TargetType  | null, callback: EventListener) {
     const targetRef = ref(target);
-    
+    let cleanup: (() => void) | null = null; 
     watch(
       targetRef,
       (el) => {
         if (el) {
-          console.log(targetRef.value.$slots);
-          console.log(targetRef.value.$props);
+          if (cleanup) {
+            cleanup(); // Call the previous cleanup function if it exists
+          }
+
+          const targetElement = (unref(targetRef) as { $el?: HTMLElement })?.$el || unref(targetRef);
+          if (targetElement instanceof HTMLElement) {
+            const { getScrollableParent } = usePosition();
+            const scrollParent = getScrollableParent(targetElement);
           
-          const targetElement = unref(targetRef)?.$el || unref(targetRef);
-          const { getScrollableParent } = usePosition();
-          const scrollParent = getScrollableParent(targetElement);
+            if (scrollParent instanceof HTMLElement) {
+              cleanup = useEventListener(scrollParent, 'scroll', callback); // Set up the listener and store cleanup function
+            }
+          
+          }
         
-          const cleanup =  useEventListener(scrollParent, 'scroll', callback);
-          return cleanup
         }
       },
       { immediate: true }
     );
-
+    return () => {
+      if (cleanup) {
+        cleanup(); // Cleanup if it exists
+      }
+    };
     
   }
   

@@ -10,7 +10,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-import PopupCategory from "@/layers/modals/Category.vue";
+import PopupCategory from "@/components/popup/category/Category.vue";
 
 interface Item extends Record<string, any> {
   value: string | number;

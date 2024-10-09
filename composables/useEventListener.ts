@@ -1,38 +1,49 @@
-// useEventListener.js
-import { ref, watch } from 'vue'
+import { ref, watch, getCurrentScope, onScopeDispose } from 'vue';
+
+type Fn = () => void;
 
 const tryOnScopeDispose = (fn: Fn): boolean => {
-    if (getCurrentScope()) {
-        onScopeDispose(fn);
-        return true;
-    }
-    return false;
+  if (getCurrentScope()) {
+    onScopeDispose(fn);
+    return true;
+  }
+  return false;
 };
 
-export function useEventListener(target, event, listener, options = {}) {
-  const targetRef = ref(target) // Để linh hoạt cho việc truyền target dạng reactive
+export function useEventListener<T extends HTMLElement | Document>(
+  target: Ref<T | null> | T,
+  event: string,
+  listener: EventListenerOrEventListenerObject,
+  options?: AddEventListenerOptions
+) {
+  const targetRef = ref(target) as Ref<T | null>; // Ref for the target element
 
-  // Đăng ký và hủy bỏ listener
-  const registerListener = (element) => element?.addEventListener(event, listener, options)
-  const removeListener = (element) => element?.removeEventListener(event, listener, options)
+  // Register and unregister listener
+  const registerListener = (element: T | null) => {
+    element?.addEventListener(event, listener, options);
+  };
 
-  // Theo dõi target và tự động đăng ký/hủy bỏ listener khi target thay đổi
+  const removeListener = (element: T | null) => {
+    element?.removeEventListener(event, listener, options);
+  };
+
+  // Watch the target and automatically register/unregister the listener when the target changes
   const stopWatch = watch(
     () => targetRef.value,
     (newTarget, oldTarget) => {
-      if (oldTarget) removeListener(oldTarget) // Hủy bỏ listener cũ
-      if (newTarget) registerListener(newTarget) // Đăng ký listener mới
+      if (oldTarget) removeListener(oldTarget); // Unregister old listener
+      if (newTarget) registerListener(newTarget); // Register new listener
     },
-    { immediate: true, flush: 'post' } // Theo dõi ngay khi composable khởi tạo
-  )
+    { immediate: true, flush: 'post' } // Watch immediately when composable initializes
+  );
 
-  // Hàm stop listener, dừng cả watch
+  // Stop listener and stop the watcher
   const stop = () => {
-    removeListener(targetRef.value)
-    stopWatch()
-  }
+    removeListener(targetRef.value);
+    stopWatch();
+  };
 
   tryOnScopeDispose(stop);
 
-  return stop
+  return stop;
 }
