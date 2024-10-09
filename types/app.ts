@@ -16,6 +16,7 @@ export interface IAppState {
   errors:Object
   device?:String | undefined
   isOpenVertical:boolean
+  isLoading:boolean
 }
 
 

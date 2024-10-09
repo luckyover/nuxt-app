@@ -26,6 +26,12 @@ const createApi = () => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
+      if(config.loading != false ){
+        const appStore = useAppStore();
+        appStore.startLoading(); 
+  
+      }
+    
       return config
     },
     function (error) {
@@ -37,12 +43,15 @@ const createApi = () => {
   // Set up the response interceptor
   Api.interceptors.response.use(
     function (response) {
+      const appStore = useAppStore();
+      appStore.stopLoading(); 
       return response; // Return the response directly if successful
     },
     function (error) {
       const appStore = useAppStore(); // Get the store instance
       const status = error.response.status;
       
+      appStore.stopLoading();
       
       if ([401, 500, 501,404].includes(status)) {
        
