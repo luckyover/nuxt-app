@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-     <div class="rounded-lg shadow-md shadow-primary-300 bg-white flex flex-col h-[85vh]">
+     <div class="rounded-lg shadow-md shadow-primary-300 bg-white flex flex-col h-[calc(100vh-120px)]">
       <div class="card-title rounded-t-lg bg-primary-300 px-6">
         <h4 class="py-1 text-s4  text-wh-100">{{props.title}}</h4>
       </div>
