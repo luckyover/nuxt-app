@@ -1,13 +1,19 @@
 <template>
   <div class="">
-    <table class="min-w-full text-left border-collapse text-s4 text-secondary-800">
-      <thead>
+    <table :class="class" class="table-auto min-w-full mt-2 text-left border-collapse text-s4 text-secondary-800">
+      <thead class="sticky top-[-20px] z-10 rounded overflow-hidden">
+        <tr class="h-[8px] bg-white"> <th
+            v-for="(header, index) in headers"
+            :key="index"
+            :style="{ width: header.width || 'auto' }"
+          
+          ></th></tr>
         <tr class="bg-gray-100 text-secondary-800">
           <th
             v-for="(header, index) in headers"
             :key="index"
             :style="{ width: header.width || 'auto' }"
-            class="py-2 px-4"
+            class="py-2 px-4 "
           >{{ header.column }}</th>
         </tr>
       </thead>
@@ -69,14 +75,19 @@ const props = defineProps({
     type: Array,
     required: true
   },
+  class: {
+    type: String,
+  },
   widths: {
     type: Array,
     default: () => []
-  }
+  },
+
 });
 </script>
   
   <style scoped>
 /* Additional custom styles (optional) */
+
 </style>
   

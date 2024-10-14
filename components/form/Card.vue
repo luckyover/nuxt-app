@@ -17,7 +17,7 @@ const props = defineProps({
       </div>
 
       <div class="card-body  flex flex-col h-full overflow-y-auto">
-        <div class="mb-3 text-right sticky px-6 py-4 bg-white z-10 top-0">
+        <div class="text-right sticky px-6 py-4 bg-white z-10 top-0">
             <slot name="action"></slot>
         </div>
         <div class="px-6 py-4">

@@ -77,6 +77,13 @@ function clear() {
 <template>
   <Listbox v-model="selected" class="w-full" :multiple="multiple">
     <div class="relative mt-1">
+            <Float 
+      portal
+      flip
+      leave-active-class="transition duration-100 ease-in" 
+      leave-from-class="opacity-100"
+
+        leave-to-class="opacity-0">
       <ListboxButton class="
           relative
           w-full
@@ -125,13 +132,11 @@ function clear() {
           </span>
         </div>
       </ListboxButton>
+ 
 
-      <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100"
-        leave-to-class="opacity-0">
         <ListboxOptions class="
-            absolute
-            z-10
-            w-full
+            w-[100px]
+            z-[99999]
             py-1
             mt-1
             overflow-auto
@@ -172,7 +177,7 @@ function clear() {
             </div>
           </ListboxOption>
         </ListboxOptions>
-      </transition>
+      </Float>
     </div>
   </Listbox>
 </template>

@@ -76,7 +76,7 @@ provide('modal', api)
   <ClientOnly>
     <slot name="activator" :open="openModal" :on="{ click: openModal }" />
      <Teleport to="body">
-        <div v-if="isOpen" class="main-popup fixed inset-0 px-3 py-6 z-[101] " scroll-region
+        <div v-if="isOpen" class="main-popup fixed inset-0 px-3 py-6 z-[101]" scroll-region
             >
             <div class="fixed inset-0 transform transition-all" @click="onModalClose" >
                 <div class="absolute inset-0 bg-gray-500 opacity-25" />
@@ -88,7 +88,7 @@ provide('modal', api)
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
                 leave-active-class="ease-in duration-500" appear>
                 <div v-if="isOpen"
-                    class="mb-6 bg-white rounded-lg overflow-hidden shadow-lg shadow-primary-300 transform transition-all sm:w-full sm:mx-auto"
+                    class="  max-h-[90vh] mb-6 bg-white rounded-lg overflow-hidden shadow-lg shadow-primary-300 transform transition-all sm:w-full sm:mx-auto"
                     :class="sizeClass">
                     <div class="relative w-full max-h-full">
                         <div class="relative bg-white rounded-lg shadow-lg shadow-primary-300 ">
