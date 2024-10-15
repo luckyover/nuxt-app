@@ -102,6 +102,7 @@ function clear() {
           focus-visible:border-primary-500
           transition
           duration-300
+          h-[32px]
         " :class="[
           outlined
             ? 'bg-transparent border-icon-inverse text-inverse-subdued'
@@ -128,7 +129,7 @@ function clear() {
             items-center
             pointer-events-none
           ">
-            <Icon name="heroicons:chevron-up-down" class="w-5 h-5" aria-hidden="true" />
+            <Icon name="heroicons:chevron-down" class="w-3 h-3 text-secondary-900" aria-hidden="true" />
           </span>
         </div>
       </ListboxButton>
@@ -153,7 +154,7 @@ function clear() {
             :value="item" as="template">
             <div class="px-1">
               <li v-if="item.divider" class="border-b -mx-1 my-1" />
-              <li v-else class="cursor-default select-none relative py-2 pr-4 rounded" :class="[
+              <li v-else class="cursor-default select-none relative py-1 pr-4 rounded" :class="[
                 active ? 'bg-secondary-50' : 'text-secondary-800',
                 !hideCheckIcon ? 'pl-10' : 'pl-4',
               ]">

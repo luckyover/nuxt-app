@@ -6,6 +6,11 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
+import { useAppStore } from "@/stores/app";
+const appStore = useAppStore();
+
+const isLoadingModal = computed(() => appStore.isLoadingModal);
 
 const props = withDefaults(
   defineProps<{
@@ -88,7 +93,7 @@ provide('modal', api)
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
                 leave-active-class="ease-in duration-500" appear>
                 <div v-if="isOpen"
-                    class="  max-h-[90vh] mb-6 bg-white rounded-lg overflow-hidden shadow-lg shadow-primary-300 transform transition-all sm:w-full sm:mx-auto"
+                    class="relative  max-h-[90vh] mb-6 bg-white rounded-lg overflow-hidden shadow-lg shadow-primary-300 transform transition-all sm:w-full sm:mx-auto"
                     :class="sizeClass">
                     <div class="relative w-full max-h-full">
                         <div class="relative bg-white rounded-lg shadow-lg shadow-primary-300 ">
@@ -106,8 +111,11 @@ provide('modal', api)
                             </div>
                         </div>
                     </div>
+                    <LoadingSpinner v-if="isLoadingModal"/>
                 </div>
+                  
             </Transition>
+          
         </div>
     </Teleport>
   </ClientOnly>

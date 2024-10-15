@@ -4,5 +4,6 @@ import 'axios';
 declare module 'axios' {
   export interface AxiosRequestConfig {
     loading?: boolean;
+    isModal?: boolean;
   }
 }

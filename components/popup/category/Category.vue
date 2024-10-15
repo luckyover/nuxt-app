@@ -36,7 +36,7 @@ const headers = [
 
 const Search = async () => {
   try {
-    const response = await api.post("category/search", searchCondition.value);
+    const response = await api.post("category/search", searchCondition.value,{isModal:true});
 
     if (response.data.status === 200) {
 

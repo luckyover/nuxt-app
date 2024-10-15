@@ -17,6 +17,7 @@ export interface IAppState {
   device?:String | undefined
   isOpenVertical:boolean
   isLoading:boolean
+  isLoadingModal:boolean
 }
 
 

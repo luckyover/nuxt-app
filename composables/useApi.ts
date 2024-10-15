@@ -29,7 +29,12 @@ const createApi = () => {
       if(config.loading != false ){
         const appStore = useAppStore();
         appStore.startLoading(); 
-  
+        
+        if(config.isModal){
+          appStore.loadingModal()
+        }else{
+          appStore.loadingScreen()
+        }
       }
     
       return config

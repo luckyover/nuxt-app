@@ -3,6 +3,7 @@
 import MenuLogo from "@/components/menu/logo/MenuLogo.vue";
 import Vertical from "@/components/menu/vertical/MenuDropDown.vue";
 import MenuMobile from "@/components/menu/mobile/Mobile.vue";
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import { useAppStore } from "@/stores/app";
 
@@ -16,6 +17,7 @@ const appStore = useAppStore();
 const device = computed(() => appStore.device);
 const hasMounted = ref(false);
 const isOpenVertical = computed(() => appStore.isOpenVertical);
+const isLoadingModal = computed(() => appStore.isLoadingModal);
 
 const handleClickMenu = () => {
   appStore.setOpenVertical(!isOpenVertical.value);
@@ -47,6 +49,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  <LoadingSpinner v-if="!isLoadingModal" />
 </template>
 <style>
 body {

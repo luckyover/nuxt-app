@@ -20,6 +20,7 @@ export const useAppStore = defineStore('app', {
       device:'',
       isOpenVertical:false,
       isLoading: false,
+      isLoadingModal: false,
     }
   },
   actions: {
@@ -76,6 +77,13 @@ export const useAppStore = defineStore('app', {
     stopLoading() {
       this.isLoading = false;
     },
+    loadingModal(){
+      this.isLoadingModal = true;
+    },
+    loadingScreen(){
+      this.isLoadingModal = false;
+    }
+
   },
  
 })

@@ -64,7 +64,7 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="data.length == 0" class="text-center mt-2">No results found</div>
+    <div v-if="data.length == 0" class="text-center mt-2 text-secondary-800 text-s4">No results found</div>
   </div>
 </template>
 
