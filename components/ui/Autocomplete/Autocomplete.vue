@@ -173,7 +173,7 @@ watch(selected, (val) => {
               <button class="flex">
                 <Icon
                   name="mdi:search"
-                  class="h-5 w-5 text-gray-400"
+                  class="h-4 w-4 text-primary-600"
                   aria-hidden="true"
                 />
               </button>
