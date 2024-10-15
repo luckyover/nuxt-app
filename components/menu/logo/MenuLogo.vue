@@ -89,7 +89,7 @@ const fetchLogout = async () => {
                 <ul class="p-2 bg-white rounded-[0.357rem]">
                   <li class="text-menu flex items-center gap-1 cursor-pointer hover:bg-bg_link p-1" @click="fetchLogout">
                     <Icon name="bx:power-off" class="w-5 h-5"></Icon>
-                      <span>Log Out</span>
+                      <span class="text-s4">Logout</span>
                   </li>
                 </ul>
               </template>

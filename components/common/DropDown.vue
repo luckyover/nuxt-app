@@ -1,7 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue';
-
+import {useClickOutside} from '@/composables/onClickOutside';
 const menu_drop_down = ref(null);
+const drop_down = ref(null);
 const openDropDown = ref(false);
 const position = computed(() => {
   if (menu_drop_down.value) {
@@ -12,14 +13,16 @@ const position = computed(() => {
   }
   return ''; 
 });
-
+useClickOutside(drop_down,()=>{
+   openDropDown.value = false;
+})
 const handleClick = () => {
     openDropDown.value = !openDropDown.value;
 };
 </script>
 
 <template>
-  <div>
+  <div ref="drop_down">
       <div class="relative inline-block">
         <div @click="handleClick" class="cursor-pointer">
           <slot name="data-click">click</slot>

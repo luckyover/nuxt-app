@@ -20,9 +20,23 @@ export function useClickOutside(
     }
   };
 
-  // Use useEventListener to listen for click events on the document
-  useEventListener(document, 'click', onClick);
-
-  // Return targetRef if external access is needed
-  return targetRef;
+    let cleanup: (() => void) | null = null; 
+    watch(
+      targetRef,
+      (el) => {
+        if (el) {
+          if (cleanup) {
+            cleanup(); // Call the previous cleanup function if it exists
+          }
+          cleanup = useEventListener(document, 'click', onClick); // Set up the listener and store cleanup function
+        }
+      },
+      { immediate: true }
+    );
+    return () => {
+      if (cleanup) {
+        cleanup(); // Cleanup if it exists
+      }
+    };
+ 
 }
