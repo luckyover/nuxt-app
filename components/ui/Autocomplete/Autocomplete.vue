@@ -146,7 +146,7 @@ watch(selected, (val) => {
             </li>
           </ul>
           <ComboboxInput
-            class="w-full border-none h-[32px] py-2 pl-2 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 focus:outline-none"
+            class="w-full border-none h-[32px] py-2 pl-2 pr-10 text-sm text-gray-800 focus:ring-0 focus:outline-none"
             :display-value="(item) => (item as Item)?.[itemValue]"
             :placeholder="placeholder"
             @change="query = $event.target.value"

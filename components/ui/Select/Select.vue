@@ -113,7 +113,7 @@ function clear() {
             'text-lg': large,
           }
         ]">
-        <span class="block truncate">
+        <span class="block truncate text-sm  text-gray-800">
           {{ multiple && selected ? `${(selected as SelectItem[])?.length} selected` : (selected as SelectItem)?.text ||
             placeholder
           }}

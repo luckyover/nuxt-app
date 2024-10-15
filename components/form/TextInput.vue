@@ -33,7 +33,7 @@ const appStore = useAppStore();
 const {errors} = storeToRefs(appStore);
 
 const inputClasses = computed(() => {
-    return `mt-1 block w-full p-1 pl-2 border rounded-md h-[32px]
+    return `mt-1 block w-full p-2  text-gray-800 text-sm pl-2 border rounded-md h-[32px]
            ${errors.value[props.name] ? 'border-red-600' : 'border-gray-300'} 
            focus:border-primary-400 focus:ring-1 focus:ring-primary-200 focus:outline-none`;
 });
