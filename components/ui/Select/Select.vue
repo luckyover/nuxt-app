@@ -12,7 +12,7 @@ type ModelValue = SelectItem | SelectItem[] | null | undefined | String
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<ModelValue>,
+    type: Number
   },
   items: {
     type: Array as PropType<SelectItem[]>,

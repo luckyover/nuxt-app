@@ -1,8 +1,11 @@
 <template>
   <div class="flex items-end justify-between">
-    <div class="w-[100px]">
-      <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
-      <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes" :hideCheckIcon="true"></VSelect>
+    <div class="flex items-end">
+      <div class="w-[100px]">
+        <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
+        <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes" :hideCheckIcon="true"></VSelect>
+      </div>
+      <span class="ml-2 mb-[5px] text-s3">Total records:{{totalPages}}</span>
     </div>
     <div class="flex items-center">
       <button
@@ -72,7 +75,7 @@ const props = defineProps({
     required: true
   },
   pageSize: {
-    type: Object,
+    type: Number,
     required: true
   }
 });

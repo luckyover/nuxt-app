@@ -25,3 +25,10 @@ export interface Toast {
   type: 'info' | 'success' | 'warning' | 'error'; // Define possible toast types
   duration:number;
 }
+
+export interface IDataTable {
+  data: any[];  // You can replace 'any' with a specific type if you have one
+  total: number;
+  pageSize: number;
+  current_page: number;
+}
