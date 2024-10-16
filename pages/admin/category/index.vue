@@ -57,7 +57,7 @@ const save  = async () => {
         >
       </template>
       <template #body>
-        <div class="grid md:grid-cols-2 gap-2">
+        <div class="grid lg:grid-cols-2 md:grid-cols-1 gap-2">
           <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
             <Autocomplete
               v-model="selected"
