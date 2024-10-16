@@ -13,7 +13,7 @@ export interface IAppState {
   isShowMessage: boolean
   message: IMessage
   toasts:Toast[]
-  errors:Object
+  errors: Record<string, string[]>;
   device?:String | undefined
   isOpenVertical:boolean
   isLoading:boolean

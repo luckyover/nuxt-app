@@ -70,11 +70,11 @@ const selected = ref({ value: 1, text: "Wade Cooper" });
             name="seo_title"
             type="text"
           />
-          <TextInput
+          <VTextarea
             v-model="data.meta_description"
             label="Meta description"
             name="meta_description"
-            type="text"
+            rows="3"
           />
         </div>
        
