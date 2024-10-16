@@ -50,13 +50,14 @@ const createApi = () => {
     function (response) {
       const appStore = useAppStore();
       appStore.stopLoading(); 
+      appStore.clearError();
       return response; // Return the response directly if successful
     },
     function (error) {
       const appStore = useAppStore(); // Get the store instance
       const status = error.response.status;
-      
       appStore.stopLoading();
+      appStore.clearError();
       
       if ([401, 500, 501,404].includes(status)) {
        
@@ -68,6 +69,12 @@ const createApi = () => {
       }else if([422, 201].includes(status)){
 
         appStore.addError(error.response.data.error)
+      }else{
+        appStore.showToast({
+          message: error.response.data.message || error.message,
+          type: 'error',
+          duration: 3000,
+        });
       }
       // Return a rejected promise to propagate the error
       return Promise.reject(error);

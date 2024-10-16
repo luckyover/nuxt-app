@@ -68,7 +68,7 @@ watch(
     />
     <span
       v-if="errors[name] && errors[name].length > 0"
-      class="text-red-600 text-s4"
+      class="text-red-600 text-s3"
     >
       {{ errors[name][0] }}
     </span>

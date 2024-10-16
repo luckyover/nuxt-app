@@ -36,7 +36,6 @@ const headers = [
 ];
 
 const Search = async () => {
-  try {
     const response = await api.post("category/search", searchCondition.value,{isModal:true});
 
     if (response.data.status === 200) {
@@ -46,9 +45,6 @@ const Search = async () => {
           duration: 3000,
       });
     }
-  } catch (error) {
-    console.error('Login error:', error);
-  }
 };
 </script>
 

@@ -22,14 +22,10 @@ const data = ref({
 const fetchLogin = async () => {
   try {
     const response = await api.post("/login", data.value);
-
     if (response.data.status === 200) {
       // Login the user
-
       login(response.data.data.user,response.data.data.token);
-
       // Get redirectFrom query or set default to '/admin/dashboard'
-    
       const redirectTo = route.query.redirect  || '/admin/dashboard';
       
       if (typeof redirectTo === 'string') {
@@ -37,7 +33,7 @@ const fetchLogin = async () => {
       }
     }
   } catch (error) {
-    console.error('Login error:', error);
+    alert('Login error:' + error);
   }
 };
 </script>

@@ -19,33 +19,32 @@ const data = ref({
   meta_description: "",
 });
 
-const items = ref([
-  { value: 1, text: "Wade Cooper" },
-  { value: 2, text: "Arlene Mccoy" },
-  { value: 3, text: "Devon Webb" },
-  { value: 4, text: "Tom Cook" },
-  { value: 5, text: "Tanya Fox" },
-  { value: 6, text: "Hellen Schmidt" },
-]);
+// const items = ref([
+//   { value: 1, text: "Wade Cooper" },
+//   { value: 2, text: "Arlene Mccoy" },
+//   { value: 3, text: "Devon Webb" },
+//   { value: 4, text: "Tom Cook" },
+//   { value: 5, text: "Tanya Fox" },
+//   { value: 6, text: "Hellen Schmidt" },
+// ]);
 
-const selected = ref({ value: 1, text: "Wade Cooper" });
+// const selected = ref({ value: 1, text: "Wade Cooper" });
 
 
 const save  = async () => {
-  try {
-    const response = await api.post("category/save", data.value);
-
+ const response = await api.post("category/save", data.value);
     if (response.data.status === 200) {
       appStore.showToast({
           message: '',
           type: 'success',
           duration: 3000,
         });
+         data.value = { ...data.value, ...response.data.data };
     }
-  } catch (error) {
-    alert('Category save error:' + error);
-  }
+    
 };
+
+const 
 </script>
 <template>
   <Layout>
@@ -78,7 +77,7 @@ const save  = async () => {
              <TextInput
               v-model="data.slug"
               label="Slug"
-              name="Slug"
+              name="slug"
               type="text"
             />
           </div>

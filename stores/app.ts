@@ -61,6 +61,9 @@ export const useAppStore = defineStore('app', {
         ...error
       }
     },
+    clearError(){
+      this.errors = {}
+    },
     //device
     setDeviceInfo(info: string | undefined) {
       this.device = info;
