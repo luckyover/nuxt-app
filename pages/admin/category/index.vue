@@ -5,6 +5,11 @@ import TextInput from "@/components/form/TextInput.vue";
 import VButton from "@/components/form/Button.vue";
 import Autocomplete from "@/components/ui/Autocomplete/Autocomplete.vue";
 import VCard from "@/components/form/Card.vue";
+import useApi from "@/composables/useApi";
+import { useAppStore } from "@/stores/app";
+
+const appStore = useAppStore();
+const api = useApi()
 
 const data = ref({
   id: "",
@@ -25,12 +30,28 @@ const items = ref([
 
 const selected = ref({ value: 1, text: "Wade Cooper" });
 
+
+const save  = async () => {
+  try {
+    const response = await api.post("category/save", data.value);
+
+    if (response.data.status === 200) {
+      appStore.showToast({
+          message: '',
+          type: 'success',
+          duration: 3000,
+        });
+    }
+  } catch (error) {
+    alert('Category save error:' + error);
+  }
+};
 </script>
 <template>
   <Layout>
     <VCard title="Category">
       <template #action>
-        <VButton type="button" class="px-4 text-s4">Save</VButton>
+        <VButton type="button" class="px-4 text-s4" @click="save">Save</VButton>
         <VButton variant="danger" type="button" class="px-4 ml-2 text-s4"
           >Delete</VButton
         >

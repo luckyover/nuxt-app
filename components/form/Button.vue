@@ -28,7 +28,7 @@
   });
   
   const buttonClasses = computed(() => {
-    const baseClasses = 'px-4 py-1  rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
+    const baseClasses = 'px-4 py-2 leading-3 rounded focus:outline-none focus:ring-2 focus:ring-offset-2';
     const variants = {
       primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-600',
       secondary: 'bg-gray-300 text-gray-700 hover:bg-gray-400 focus:ring-gray-500',

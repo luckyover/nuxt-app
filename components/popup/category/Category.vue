@@ -5,6 +5,7 @@ import Pagination from "@/components/ui/Pagination/Pagination.vue";
 import type { IDataTable} from '@/types/app'
 import VTable from "@/components/form/Table.vue";
 import useApi from "@/composables/useApi";
+
 import { ref } from "vue";
 
 const api = useApi()
@@ -39,7 +40,11 @@ const Search = async () => {
     const response = await api.post("category/search", searchCondition.value,{isModal:true});
 
     if (response.data.status === 200) {
-
+      appStore.showToast({
+          message: error.response.data.message || error.message,
+          type: 'error',
+          duration: 3000,
+      });
     }
   } catch (error) {
     console.error('Login error:', error);
