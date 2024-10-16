@@ -33,6 +33,7 @@ const data = ref({
 
 const save  = async () => {
  const response = await api.post("category/save", data.value);
+   
     if (response.data.status === 200) {
       appStore.showToast({
           message: '',
@@ -40,11 +41,11 @@ const save  = async () => {
           duration: 3000,
         });
          data.value = { ...data.value, ...response.data.data };
+
+         
     }
     
 };
-
-const 
 </script>
 <template>
   <Layout>
