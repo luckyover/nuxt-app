@@ -20,8 +20,7 @@ const data = ref({
 });
 
 const fetchLogin = async () => {
-  try {
-    const response = await api.post("/login", data.value);
+  const response = await api.post("/login", data.value);
     if (response.data.status === 200) {
       // Login the user
       login(response.data.data.user,response.data.data.token);
@@ -32,9 +31,6 @@ const fetchLogin = async () => {
         await router.push(redirectTo); // Ensure redirectTo is a string
       }
     }
-  } catch (error) {
-    alert('Login error:' + error);
-  }
 };
 </script>
 

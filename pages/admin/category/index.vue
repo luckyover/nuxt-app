@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref,unref } from "vue";
 import Layout from "@/components/layout/admin/layout.vue";
 import TextInput from "@/components/form/TextInput.vue";
 import VButton from "@/components/form/Button.vue";
@@ -19,16 +19,6 @@ const data = ref({
   meta_description: "",
 });
 
-// const items = ref([
-//   { value: 1, text: "Wade Cooper" },
-//   { value: 2, text: "Arlene Mccoy" },
-//   { value: 3, text: "Devon Webb" },
-//   { value: 4, text: "Tom Cook" },
-//   { value: 5, text: "Tanya Fox" },
-//   { value: 6, text: "Hellen Schmidt" },
-// ]);
-
-// const selected = ref({ value: 1, text: "Wade Cooper" });
 
 
 const save  = async () => {
@@ -41,11 +31,22 @@ const save  = async () => {
           duration: 3000,
         });
          data.value = { ...data.value, ...response.data.data };
-
-         
     }
     
 };
+
+const selectAutoComplete = computed({
+  set(item :{[key: string]: any}){
+    data.value.id =  item?.id || '';
+    data.value.name =  item?.name || '';
+  },
+  get(){
+    return {
+      id:data.value.id,
+      name:data.value.name
+    }
+  }
+})
 </script>
 <template>
   <Layout>
@@ -57,11 +58,14 @@ const save  = async () => {
         >
       </template>
       <template #body>
+       {{ data }}
         <div class="grid lg:grid-cols-2 md:grid-cols-1 gap-2">
           <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
             <Autocomplete
-              v-model="selected"
-              :items="items"
+              v-model="selectAutoComplete"
+              screen="category"
+              itemText="name"
+              itemValue="id"
               label="ID"
               :is-search="true"
               popup_name="Category"

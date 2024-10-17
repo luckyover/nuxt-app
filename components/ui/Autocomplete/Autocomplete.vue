@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref } from "vue";
+import { computed, ref,watchEffect } from "vue";
 import {
   Combobox,
   ComboboxButton,
@@ -9,12 +9,16 @@ import {
   ComboboxOptions,
   TransitionRoot,
 } from "@headlessui/vue";
+import useApi from "@/composables/useApi";
+import { useAppStore } from "@/stores/app";
+
 
 import PopupCategory from "@/components/popup/category/Category.vue";
+const api = useApi()
+const appStore = useAppStore();
 
 interface Item extends Record<string, any> {
-  value: string | number;
-  text: string;
+  [key: string]: any; 
 }
 
 type ModelValue = Item | Item[] | undefined | null;
@@ -31,9 +35,9 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  items: {
-    type: Array as PropType<Item[]>,
-    default: () => [] as Item[],
+  screen: {
+    type: String,
+    default: "text",
   },
   itemText: {
     type: String,
@@ -56,8 +60,7 @@ const props = defineProps({
     default: "",
   },
 });
-
-const isOpen = ref(false);
+const items = ref<Item[]>([]);
 
 const popup = computed(() => {
   switch (props.popup_name) {
@@ -77,8 +80,9 @@ const defaultValue = props.multiple
     ? props.modelValue
     : [props.modelValue] // Ensure it's an array
   : props.modelValue;
+
 const selected = ref<ModelValue | ModelValue[]>(defaultValue);
-const query = ref("");
+const query = ref<string>("");
 const isFocused = ref(false);
 
 function onFocus() {
@@ -87,20 +91,25 @@ function onFocus() {
 
 function onBlur() {
   isFocused.value = false;
+  if (query.value == '' && !props.multiple) {
+     selected.value = null // Correct dynamic property access
+  }
 }
 
 const isFocus = computed(() => (isFocused.value ? "is-focus" : ""));
 
 const filteredItems = computed(() =>
-  query.value === ""
-    ? props.items
-    : props.items.filter((item) =>
-        item[props.itemText]
-          .toLowerCase()
-          .replace(/\s+/g, "")
-          .includes(query.value.toLowerCase().replace(/\s+/g, ""))
-      )
+    items.value 
 );
+
+const autoComplete  = async (key:string) => {
+  query.value = key;
+ const response = await api.post("autocomplete", {key:key,screen:props.screen},{loading:false});
+    if (response.data.status === 200) {
+       items.value = response.data.data;
+    }
+};
+
 
 const removeSelected = (idx: number) => {
   if (props.multiple) (selected.value as ModelValue[])?.splice(idx, 1);
@@ -114,10 +123,12 @@ const clear = () => {
 watch(selected, (val) => {
   emit("update:modelValue", val);
 });
+
 </script>
 
 <template>
   <div>
+  
     <label class="block text-s4 text-secondary-800">{{ label }}</label>
     <Combobox v-model="selected" :multiple="multiple">
       <div class="relative mt-1">
@@ -149,9 +160,10 @@ watch(selected, (val) => {
             class="w-full border-none h-[32px] py-2 pl-2 pr-10 text-sm text-gray-800 focus:ring-0 focus:outline-none"
             :display-value="(item) => (item as Item)?.[itemValue]"
             :placeholder="placeholder"
-            @change="query = $event.target.value"
+            @change="autoComplete($event.target.value)"
             @focus="onFocus"
             @blur="onBlur"
+             autoComplete="off"
           />
           <div class="absolute inset-y-0 right-0 flex items-center pr-2">
             <!-- <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
@@ -203,19 +215,19 @@ watch(selected, (val) => {
               :value="item"
             >
               <li
-                class="relative cursor-default select-none py-2 pl-10 pr-4"
+                class="relative cursor-default select-none py-2 pl-4 pr-4 text-s4"
                 :class="{
                   'bg-gray-100 text-gray-900': active,
                   'text-gray-900': !active,
                 }"
               >
                 <span
-                  class="block truncate"
-                  :class="{ 'font-medium': selected, 'font-normal': !selected }"
+                  class="block truncate font-semibold"
                 >
                   {{ item[itemText] }}
                 </span>
-                <span
+                <span> {{ item[itemValue] }}</span>
+                <!-- <span
                   v-if="selected"
                   class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-500"
                 >
@@ -224,7 +236,7 @@ watch(selected, (val) => {
                     class="h-5 w-5"
                     aria-hidden="true"
                   />
-                </span>
+                </span> -->
               </li>
             </ComboboxOption>
           </ComboboxOptions>
