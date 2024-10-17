@@ -82,17 +82,25 @@ const defaultValue = props.multiple
   : props.modelValue;
 
 const selected = ref<ModelValue | ModelValue[]>(defaultValue);
-const query = ref<string>("");
+const inputRef = ref<string>(null);
 const isFocused = ref(false);
 
 function onFocus() {
   isFocused.value = true;
 }
 
-function onBlur() {
+function onBlur(e: FocusEvent) {
   isFocused.value = false;
-  if (query.value == '' && !props.multiple) {
-     selected.value = null // Correct dynamic property access
+  const target = e.target as HTMLInputElement;
+  if (target.value === '' && !props.multiple) {
+
+    selected.value = {
+      [props.itemValue] :''
+    } // Correct dynamic property access
+  }else if(target.value != selected.value[props.itemValue]){
+    selected.value = {
+      [props.itemValue] : target.value
+    }  
   }
 }
 
@@ -103,13 +111,14 @@ const filteredItems = computed(() =>
 );
 
 const autoComplete  = async (key:string) => {
-  query.value = key;
+  
  const response = await api.post("autocomplete", {key:key,screen:props.screen},{loading:false});
     if (response.data.status === 200) {
        items.value = response.data.data;
     }
 };
 
+const debouncedSearch = debounce(autoComplete,400);
 
 const removeSelected = (idx: number) => {
   if (props.multiple) (selected.value as ModelValue[])?.splice(idx, 1);
@@ -160,10 +169,11 @@ watch(selected, (val) => {
             class="w-full border-none h-[32px] py-2 pl-2 pr-10 text-sm text-gray-800 focus:ring-0 focus:outline-none"
             :display-value="(item) => (item as Item)?.[itemValue]"
             :placeholder="placeholder"
-            @change="autoComplete($event.target.value)"
+            @change="debouncedSearch($event.target.value)"
             @focus="onFocus"
             @blur="onBlur"
              autoComplete="off"
+             ref="inputRef"
           />
           <div class="absolute inset-y-0 right-0 flex items-center pr-2">
             <!-- <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
@@ -182,7 +192,7 @@ watch(selected, (val) => {
             </ComboboxButton> -->
          
             <component :is="popup"  v-if="isSearch">
-              <button class="flex">
+              <button class="flex" tabindex="-1">
                 <Icon
                   name="mdi:search"
                   class="h-4 w-4 text-primary-600"
@@ -196,13 +206,13 @@ watch(selected, (val) => {
           leave="transition ease-in duration-100"
           leave-from="opacity-100"
           leave-to="opacity-0"
-          @after-leave="query = ''"
+         
         >
           <ComboboxOptions
             class="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
           >
             <div
-              v-if="filteredItems.length === 0 && query !== ''"
+              v-if="filteredItems.length === 0"
               class="relative cursor-default select-none py-2 px-4 text-gray-700"
             >
               Nothing found.
