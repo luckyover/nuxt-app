@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
-import { computed, ref,watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import {
   Combobox,
   ComboboxButton,
@@ -12,13 +12,12 @@ import {
 import useApi from "@/composables/useApi";
 import { useAppStore } from "@/stores/app";
 
-
 import PopupCategory from "@/components/popup/category/Category.vue";
-const api = useApi()
+const api = useApi();
 const appStore = useAppStore();
 
 interface Item extends Record<string, any> {
-  [key: string]: any; 
+  [key: string]: any;
 }
 
 type ModelValue = Item | Item[] | undefined | null;
@@ -59,6 +58,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 });
 const items = ref<Item[]>([]);
 
@@ -82,9 +85,9 @@ const defaultValue = props.multiple
   : props.modelValue;
 
 const selected = ref<ModelValue | ModelValue[]>(defaultValue);
-const inputRef = ref<string>(null);
+const inputRef = ref(null);
 const isFocused = ref(false);
-
+const isChange = ref(false);
 function onFocus() {
   isFocused.value = true;
 }
@@ -92,33 +95,38 @@ function onFocus() {
 function onBlur(e: FocusEvent) {
   isFocused.value = false;
   const target = e.target as HTMLInputElement;
-  if (target.value === '' && !props.multiple) {
+  if (target.value === "" && !props.multiple) {
+    selected.value = {
+      ...Object.fromEntries(
+        Object.keys({ ...selected.value }).map((key) => [key, ""])
+      ),
+    };
+  }
 
-    selected.value = {
-      [props.itemValue] :''
-    } // Correct dynamic property access
-  }else if(target.value != selected.value[props.itemValue]){
-    selected.value = {
-      [props.itemValue] : target.value
-    }  
+  if (selected.value && !props.multiple) {
+    const selectedValueAsObject = selected.value as Record<string, any>;
+    if (target.value != selectedValueAsObject[props.itemValue]) {
+      selected.value = {
+        ...Object.fromEntries(Object.keys({ ...selectedValueAsObject }).map((key) => [key, ""])),
+        [props.itemValue]: target.value, // Giữ lại id
+      };
+      isChange.value = true;
+    }
   }
 }
 
 const isFocus = computed(() => (isFocused.value ? "is-focus" : ""));
 
-const filteredItems = computed(() =>
-    items.value 
-);
+const filteredItems = computed(() => items.value);
 
-const autoComplete  = async (key:string) => {
-  
- const response = await api.post("autocomplete", {key:key,screen:props.screen},{loading:false});
-    if (response.data.status === 200) {
-       items.value = response.data.data;
-    }
+const autoComplete = async (key: string) => {
+  const response = await api.post("autocomplete",{ key: key, screen: props.screen },{ loading: false });
+  if (response.data.status === 200) {
+    items.value = response.data.data;
+  }
 };
 
-const debouncedSearch = debounce(autoComplete,400);
+const debouncedSearch = debounce(autoComplete, 400);
 
 const removeSelected = (idx: number) => {
   if (props.multiple) (selected.value as ModelValue[])?.splice(idx, 1);
@@ -129,15 +137,35 @@ const clear = () => {
   else selected.value = null;
 };
 
+const findCategory = async (id: string) => {
+  const response = await api.post("common/find", { key: id, screen: props.screen},{ loading: props.isLoading });
+  if (response.data.data && Object.keys(response.data.data).length > 0) {
+    selected.value = { ...selected.value, ...response.data.data };
+  } else {
+    if (selected.value && !props.multiple) {
+      const { [props.itemValue]: id, ...rest } = selected.value as Record<
+        string,
+        any
+      >; // Assert type
+      selected.value = {
+        [props.itemValue]: id, // Giữ lại id
+        ...Object.fromEntries(Object.keys(rest).map((key) => [key, ""])),
+      };
+    }
+  }
+};
+
 watch(selected, (val) => {
   emit("update:modelValue", val);
+  if (isChange.value && !props.multiple) {
+    findCategory((val as Record<string, any>)[props.itemValue]); 
+    isChange.value = false;
+  }
 });
-
 </script>
 
 <template>
   <div>
-  
     <label class="block text-s4 text-secondary-800">{{ label }}</label>
     <Combobox v-model="selected" :multiple="multiple">
       <div class="relative mt-1">
@@ -172,8 +200,8 @@ watch(selected, (val) => {
             @change="debouncedSearch($event.target.value)"
             @focus="onFocus"
             @blur="onBlur"
-             autoComplete="off"
-             ref="inputRef"
+            autoComplete="off"
+            ref="inputRef"
           />
           <div class="absolute inset-y-0 right-0 flex items-center pr-2">
             <!-- <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
@@ -190,8 +218,8 @@ watch(selected, (val) => {
                 aria-hidden="true"
               />
             </ComboboxButton> -->
-         
-            <component :is="popup"  v-if="isSearch">
+
+            <component :is="popup" v-if="isSearch">
               <button class="flex" tabindex="-1">
                 <Icon
                   name="mdi:search"
@@ -206,7 +234,6 @@ watch(selected, (val) => {
           leave="transition ease-in duration-100"
           leave-from="opacity-100"
           leave-to="opacity-0"
-         
         >
           <ComboboxOptions
             class="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
@@ -231,9 +258,7 @@ watch(selected, (val) => {
                   'text-gray-900': !active,
                 }"
               >
-                <span
-                  class="block truncate font-semibold"
-                >
+                <span class="block truncate font-semibold">
                   {{ item[itemText] }}
                 </span>
                 <span> {{ item[itemValue] }}</span>
@@ -259,9 +284,12 @@ watch(selected, (val) => {
 .is-focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(170 171 255 / var(--tw-ring-opacity));
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
   --tw-border-opacity: 1;
   border-color: rgb(105 107 255 / var(--tw-border-opacity));
 }

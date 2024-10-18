@@ -3,18 +3,22 @@ import { computed,type  Ref } from 'vue';
 
 export function useSelectAutoComplete(
   data: Ref<{ [key: string]: any }>,
-  fields: { idField: string; nameField: string }  // Trường động
+  keys?: string[] // Trường động
 ) {
   const selectAutoComplete = computed({
     set(item: { [key: string]: any }) {
-      data.value[fields.idField] = item[fields.idField] || '';
-      data.value[fields.nameField] = item[fields.nameField] || '';
+      if (keys) {
+        keys.forEach(key => {
+          data.value[key] = item[key] || '';  // Set từng trường nếu có
+        });
+      } else {
+        Object.assign(data.value, item);  // Set toàn bộ dữ liệu nếu không có fields
+      }
     },
     get() {
-      return {
-        [fields.idField]: data.value[fields.idField],
-        [fields.nameField]: data.value[fields.nameField],
-      };
+      return keys 
+        ? Object.fromEntries(keys.map(key => [key, data.value[key]]))  // Trả về các trường cụ thể
+        : { ...data.value };  // Trả về toàn bộ dữ liệu nếu không có keys
     },
   });
 

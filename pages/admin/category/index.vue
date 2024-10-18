@@ -8,7 +8,7 @@ import VCard from "@/components/form/Card.vue";
 import useApi from "@/composables/useApi";
 import { useAppStore } from "@/stores/app";
 import { useSelectAutoComplete } from "@/composables/useSelectAutoComplete";
-import { debounce } from "@/composables//debounce";
+
 const appStore = useAppStore();
 const api = useApi();
 
@@ -22,10 +22,7 @@ const defaultData = {
 
 const data = ref({ ...defaultData });
 
-const { selectAutoComplete } = useSelectAutoComplete(data, {
-  idField: "id",
-  nameField: "name"
-});
+const { selectAutoComplete } = useSelectAutoComplete(data);
 
 const save = async () => {
   const response = await api.post("category/save", data.value);
@@ -39,24 +36,6 @@ const save = async () => {
   }
 };
 
-const findCategory = async (id: string) => {
-  const response = await api.post("category/find", { id: id });
-  if (response.data.data && Object.keys(response.data.data).length > 0) {
-    data.value = { ...data.value, ...response.data.data };
-  } else {
-    data.value = {
-      ...defaultData,
-      id: data.value.id // Giữ lại id
-    };
-  }
-};
-
-watch(
-  () => data.value.id, // Theo dõi id
-  newVal => {
-    findCategory(newVal); 
-  }
-);
 </script>
 <template>
   <Layout>
@@ -72,6 +51,7 @@ watch(
               v-model="selectAutoComplete"
               screen="category"
               itemText="name"
+              :isLoading="true"
               itemValue="id"
               label="ID"
               :is-search="true"
