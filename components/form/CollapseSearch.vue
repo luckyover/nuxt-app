@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref,emit } from 'vue'
 
 const props = defineProps({
     open: {
@@ -7,16 +7,24 @@ const props = defineProps({
     default: ''
   },
 });
+const emit = defineEmits([
+  "update:open",
+]);
+
 const isOpen = ref<Boolean>(props.open)
 const toggleCollapse = () => {
     isOpen.value = !isOpen.value
+    emit("update:open", isOpen.value);
 }
+watch(() => props.open, (newVal) => {
+  isOpen.value = newVal;
+});
+
 const classIcon = computed (()=>{
     return isOpen.value ? 'ph:minus-fill' : 'ph:plus-fill';
 })
 </script>
 <template>
-      
       
     <div class="flex items-center mt-2">
         <div class="text-white cursor-pointer flex ml-[-3px]" @click="toggleCollapse">

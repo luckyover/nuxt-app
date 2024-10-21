@@ -5,7 +5,7 @@
         <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
         <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes" :hideCheckIcon="true"></VSelect>
       </div>
-      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records: {{totalItems}} item</span>
+      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records: {{totalItems}} Item</span>
     </div>
     <div class="flex items-center">
       <button

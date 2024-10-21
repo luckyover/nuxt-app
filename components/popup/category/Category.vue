@@ -15,7 +15,7 @@ const searchCondition = ref({
   page: 1,
 });
 const itemFirst = ref<HTMLInputElement | null>(null)
-
+const isShowCollapse = ref(true)
 const dataTable = ref<IDataTable>([]);
 const headers = [
   { name: "id", column: "#", type: "text", width: "5%" },
@@ -37,6 +37,8 @@ const Search = async () => {
   if (response.data.status === 200) {
     dataTable.value = response.data.data.data;
     searchCondition.value = {...searchCondition.value,...response.data.data.pagination}
+
+    isShowCollapse.value = false;
   }
 };
 
@@ -60,7 +62,8 @@ const handleModalClose = () => {
       </div>
     </template>
     <template #body>
-      <CollapseSearch>
+      <CollapseSearch v-model:open="isShowCollapse">
+
         <template #content>
           <div class="grid md:grid-cols-4 gap-2">
             <TextInput
