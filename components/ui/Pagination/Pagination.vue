@@ -5,7 +5,7 @@
         <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
         <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes" :hideCheckIcon="true"></VSelect>
       </div>
-      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records:{{totalItems}}</span>
+      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records: {{totalItems}} item</span>
     </div>
     <div class="flex items-center">
       <button
@@ -77,12 +77,15 @@ const props = defineProps({
   pageSize: {
     type: Number,
     required: true
+  },
+  onSearch:{
+     type: Function,
   }
 });
 
 const emit = defineEmits([
   "update:modelValue",
-  "update:modelPageSize",
+  "update:pageSize",
   "changePage"
 ]);
 
@@ -93,7 +96,11 @@ const pageSizes = ref([
 ]);
 // Local states for pagination
 const currentPage = ref(props.modelValue);
-const selectedPageSize = ref(props.pageSize);
+const selectedPageSize = ref({
+  value:props.pageSize,
+  text:'',
+});
+
 const totalPages = computed(() => {
   return Math.ceil(props.totalItems / props.pageSize);
 });
@@ -130,12 +137,12 @@ const goToNextPage = () => {
 
 const emitUpdate = () => {
   emit("update:modelValue", currentPage.value);
-  emit("changePage");
+  props.onSearch()
 };
-
-const onPageSizeChange = () => {
-  emit("changePage");
-};
+watch(selectedPageSize, (newValue) => {
+  emit("update:pageSize", newValue.value);
+   props.onSearch()
+});
 </script>
 
 <style scoped>

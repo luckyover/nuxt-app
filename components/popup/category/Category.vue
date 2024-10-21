@@ -10,15 +10,13 @@ import { ref , nextTick} from "vue";
 const api = useApi();
 const searchCondition = ref({
   name: "",
+  total: 0,
+  page_size: 20,
+  page: 1,
 });
 const itemFirst = ref<HTMLInputElement | null>(null)
 
-const dataTable = ref<IDataTable>({
-  data: [],
-  total: 0,
-  pageSize: 20,
-  current_page: 1,
-});
+const dataTable = ref<IDataTable>([]);
 const headers = [
   { name: "id", column: "#", type: "text", width: "5%" },
   { name: "name", column: "Name", type: "text", width: "10%" },
@@ -37,19 +35,18 @@ const Search = async () => {
   });
 
   if (response.data.status === 200) {
-    dataTable.value = { ...dataTable.value, ...response.data.data };
+    dataTable.value = response.data.data.data;
+    searchCondition.value = {...searchCondition.value,...response.data.data.pagination}
   }
 };
 
 const handleModalClose = () => {
-  dataTable.value = {
-    data: [],
-    total: 0,
-    pageSize: 20,
-    current_page: 1,
-  };
+  dataTable.value = []
   searchCondition.value = {
-    name: "",
+      name: "",
+      total: 0,
+      page_size: 20,
+      page: 1,
   };
 };
 
@@ -76,11 +73,13 @@ const handleModalClose = () => {
         </template>
       </CollapseSearch>
       <Pagination
-        :totalItems="dataTable.total"
-        v-model="dataTable.current_page"
-        v-model:page-size="dataTable.pageSize"
+        :totalItems="searchCondition.total"
+        v-model="searchCondition.page"
+        v-model:page-size="searchCondition.page_size"
+        :on-search="Search"
+        
       />
-      <VTable class="mt-2" :data="dataTable.data" :headers="headers"></VTable>
+      <VTable class="mt-2" :data="dataTable" :headers="headers"></VTable>
     </template>
     <template #footer>
       <div class="flex justify-end p-2">

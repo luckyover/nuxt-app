@@ -12,10 +12,11 @@ type ModelValue = SelectItem | SelectItem[] | null | undefined | String
 
 const props = defineProps({
   modelValue: {
-    type: Number
+     type: Object as PropType<ModelValue>,
   },
   items: {
     type: Array as PropType<SelectItem[]>,
+
     default: () => [] as SelectItem[],
   },
   placeholder: {
@@ -53,7 +54,7 @@ function findSelectedItem(value: Number):ModelValue {
   // if (Array.isArray(value)) {
   //   return value.map(val => props.items.find(item => item.value === val.value) || null)
   // }
-  return props.items.find(item => item.value === value) || null
+  return props.items.find(item => item.value === value.value) || null
 }
 
 // Initialize selected based on modelValue by looking it up in the items array
