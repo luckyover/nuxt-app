@@ -49,7 +49,7 @@ const emit = defineEmits(['update:modelValue', 'clear'])
 const { modelValue } = toRefs(props)
 
 // Helper function to match the selected value by 'value' property
-function findSelectedItem(value: ModelValue) {
+function findSelectedItem(value: Number):ModelValue {
   // if (Array.isArray(value)) {
   //   return value.map(val => props.items.find(item => item.value === val.value) || null)
   // }
@@ -57,12 +57,11 @@ function findSelectedItem(value: ModelValue) {
 }
 
 // Initialize selected based on modelValue by looking it up in the items array
-const selected = ref<ModelValue>(findSelectedItem(modelValue!.value))
+const selected = ref<ModelValue>(findSelectedItem(modelValue?.value ?? 0));
 
-
-watch(modelValue!, (val) => {
-  selected.value = val
-})
+watch(() => modelValue, (val) => {
+  selected.value = val !== undefined && val !== null ? String(val) : ''; // Convert to string, or set a default value
+});
 
 watch(selected, (val) => {
   emit('update:modelValue', val)

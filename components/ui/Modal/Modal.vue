@@ -41,6 +41,8 @@ const sizeClass = computed(() => {
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
+  (e: 'modalClosed'): void; // Define the new event here
+  (e: 'modalOpen'): void; // Define the new event here
 }>()
 
 const { modelValue } = toRefs(props)
@@ -53,10 +55,12 @@ watch(modelValue, (value) => {
 
 function closeModal() {
   isOpen.value = false
+  emit('modalClosed'); 
 }
 
 function openModal() {
   isOpen.value = true
+  emit('modalOpen');
 }
 
 function onModalClose() {

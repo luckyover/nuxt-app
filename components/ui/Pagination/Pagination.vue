@@ -5,7 +5,7 @@
         <label for="" class="mr-2 pageSize text-s4 text-secondary-800">Page Size:</label>
         <VSelect v-model="selectedPageSize" placeholder="" :items="pageSizes" :hideCheckIcon="true"></VSelect>
       </div>
-      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records:{{totalPages}}</span>
+      <span class="ml-2 mb-[5px] text-s3 font-semibold text-secondary-800">Total records:{{totalItems}}</span>
     </div>
     <div class="flex items-center">
       <button
@@ -62,7 +62,7 @@ import { ref, computed } from "vue";
 import VSelect from "@/components/ui/Select/Select.vue";
 // Props to pass into the component
 const props = defineProps({
-  totalPages: {
+  totalItems: {
     type: Number,
     required: true
   },
@@ -94,13 +94,15 @@ const pageSizes = ref([
 // Local states for pagination
 const currentPage = ref(props.modelValue);
 const selectedPageSize = ref(props.pageSize);
-
+const totalPages = computed(() => {
+  return Math.ceil(props.totalItems / props.pageSize);
+});
 // console.log('totalRecord:', props.totalRecord);
 
 const visiblePages = computed(() => {
   const pages = [];
   const startPage = Math.max(1, currentPage.value - 1);
-  const endPage = Math.min(props.totalPages, currentPage.value + 1);
+  const endPage = Math.min(totalPages.value, currentPage.value + 1);
 
   for (let i = startPage; i <= endPage; i++) {
     pages.push(i);
@@ -121,7 +123,7 @@ const goToPreviousPage = () => {
 };
 
 const goToNextPage = () => {
-  if (currentPage.value < props.totalPages) {
+  if (currentPage.value < totalPages.value) {
     goToPage(currentPage.value + 1);
   }
 };

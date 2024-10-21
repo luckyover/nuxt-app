@@ -56,7 +56,7 @@ export const useAppStore = defineStore('app', {
       this.toasts.splice(index, 1); // Remove the toast at the given index
     },
     //message error
-    addError(error:Object){
+    addError(error:Record<string, string[]>){
       this.errors = {
         ...error
       }
