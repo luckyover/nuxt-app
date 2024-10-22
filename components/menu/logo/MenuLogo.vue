@@ -44,9 +44,10 @@ const fetchLogout = async () => {
       class="flex w-full flex-wrap justify-between items-center px-8 md:px-6"
     >
       <div class="navbar-brand flex items-center gap-2">
+      
         <div
           class="layout-menu-toggle navbar-nav pt-[10px]"
-          v-if="type == 'ipad'"
+          v-if="type != 'pc'"
         >
           <a
             class="nav-item nav-link px-0 me-xl-4"

@@ -18,7 +18,7 @@ const handleToggle = (index:any) => {
 };
 
 const getId = computed(() => {
-  return props.type === "ipad" ? "menu-ipad" : "menu-vertical";
+  return props.type != "pc" ? "menu-ipad" : "menu-vertical";
 });
 
 //open menu
@@ -48,17 +48,17 @@ defineExpose({
 </script>
 <template>
 
-  <div id="vertical">
+  <div id="vertical" class="z-50">
     <div
-      class="fixed inset-0 transform transition-all"
-      v-if="isOpenVertical && type == 'ipad'"
+      class="fixed inset-0 transform transition-all z-50"
+      v-if="isOpenVertical && type != 'pc'"
       @click="isOpenVertical = false"
     >
-      <div class="absolute inset-0 bg-backdrop opacity-50"></div>
+      <div class="absolute inset-0 bg-backdrop opacity-50  "></div>
     </div>
 
     <div
-      class="w-[260px] h-full bg-white shadow-lg shadow-primary-200 text-nav fixed left-0 top-0"
+      class="w-[260px] h-full bg-white shadow-lg shadow-primary-200 text-nav fixed left-0 top-0 z-50"
       id="menu-wrap"
       :class="[isOpenVertical ? 'open' : 'close', getId]"
     >
