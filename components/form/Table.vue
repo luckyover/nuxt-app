@@ -30,7 +30,7 @@
             <span
               v-if="header.type == 'text'"
               :class="[header.name == 'id' ? 'text-primary-500' : '']"
-              >#{{ item[header.name] }}</span
+              >{{ header.name == 'id' ? '#' + item[header.name] : item[header.name] }}</span
             >
 
             <!-- For status type -->

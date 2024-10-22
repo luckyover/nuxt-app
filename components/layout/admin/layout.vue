@@ -4,8 +4,9 @@ import MenuLogo from "@/components/menu/logo/MenuLogo.vue";
 import Vertical from "@/components/menu/vertical/MenuDropDown.vue";
 import MenuMobile from "@/components/menu/mobile/Mobile.vue";
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref,nextTick  } from "vue";
 import { useAppStore } from "@/stores/app";
+import {useFindFirstFocusableElement} from "@/composables/useFindFirstFocusableElement"
 
 interface MenuComponent {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const containerClass = computed(() => {
 
 onMounted(() => {
   hasMounted.value = true;
+  useFindFirstFocusableElement()
 });
 </script>
 <template>

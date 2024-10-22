@@ -14,14 +14,12 @@ const searchCondition = ref({
   page_size: 20,
   page: 1,
 });
-const itemFirst = ref<HTMLInputElement | null>(null)
 const isShowCollapse = ref(true)
-const dataTable = ref<IDataTable>([]);
+const dataTable = ref<IDataTable[]>([]);
 const headers = [
   { name: "id", column: "#", type: "text", width: "5%" },
   { name: "name", column: "Name", type: "text", width: "10%" },
   { name: "seo_title", column: "Seo-Title", type: "text", width: "10%" },
-  { name: "checkout", column: "Checkout", type: "text", width: "10%" },
   { name: "slug", column: "Slug", type: "text", width: "10%" },
   { name: "created_at", column: "Created-At", type: "text", width: "10%" },
   { name: "updated_at", column: "Updated-At", type: "text", width: "10%" },

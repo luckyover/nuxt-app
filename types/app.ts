@@ -28,8 +28,11 @@ export interface Toast {
 }
 
 export interface IDataTable {
-  data: any[];  // You can replace 'any' with a specific type if you have one
-  total: number;
-  pageSize: number;
-  current_page: number;
+  id:String 
+  name:String 
+  seo_title:String 
+  slug:String 
+  created_at:String 
+  updated_at:String 
+
 }
