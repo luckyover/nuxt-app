@@ -2,10 +2,9 @@
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import type { DropdownItemProps } from "./types";
 import DropdownItem from "./DropdownItem.vue";
-import { onMounted, onUnmounted, nextTick, ref } from "vue";
+import {ref } from "vue";
 import { usePosition } from "@/composables/position";
 import {useScrollParent} from '@/composables/useScrollParent';
-const { getScrollableParent } = usePosition();
 
 withDefaults(
   defineProps<{
@@ -29,15 +28,18 @@ withDefaults(
 const menu_drop = ref(null);
 const isOpen = ref(false);
 
-  const closeRef = ref(null); // Tạo ref để lưu hàm close
+type CloseFunction = () => void;
 
-    // Hàm để lưu hàm close vào ref
-    const initializeClose = (close) => {
-      if (close && !closeRef.value) { // Chỉ lưu nếu hàm close chưa được lưu
-        closeRef.value = close;
-      }
-      return true; // Điều kiện để v-if luôn là true
-    };
+// Create a ref to store the close function
+const closeRef = ref<CloseFunction | null>(null); // Initialize with null
+
+// Hàm để lưu hàm close vào ref
+const initializeClose = (close:CloseFunction) => {
+  if (close && !closeRef.value) { // Chỉ lưu nếu hàm close chưa được lưu
+    closeRef.value = close;
+  }
+  return true; // Điều kiện để v-if luôn là true
+};
 
 
 const onScroll = () => {

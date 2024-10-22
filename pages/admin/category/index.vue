@@ -28,11 +28,25 @@ const save = async () => {
   const response = await api.post("category/save", data.value);
   if (response.data.status === 200) {
     appStore.showToast({
-      message: "",
+      message: "Successfully saved!",
       type: "success",
       duration: 3000
     });
     data.value = { ...data.value, ...response.data.data };
+  }
+};
+const handelDelete = async () => {
+  const response = await api.post("category/delete", data.value);
+  if (response.data.status === 200) {
+    appStore.showToast({
+      message: "Successfully deleted!",
+      type: "success",
+      duration: 3000
+    });
+    setTimeout(() => {
+      data.value = { ...data.value, ...defaultData  };
+    }, 3000);
+   
   }
 };
 
@@ -42,9 +56,10 @@ const save = async () => {
     <VCard title="Category">
       <template #action>
         <VButton type="button" class="px-4 text-s4" @click="save">Save</VButton>
-        <VButton variant="danger" type="button" class="px-4 ml-2 text-s4">Delete</VButton>
+        <VButton variant="danger" type="button" class="px-4 ml-2 text-s4" @click="handelDelete">Delete</VButton>
       </template>
       <template #body>
+      
         <div class="grid lg:grid-cols-2 md:grid-cols-1 gap-2">
           <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
             <Autocomplete
@@ -53,6 +68,7 @@ const save = async () => {
               itemText="name"
               :isLoading="true"
               itemValue="id"
+              name="id"
               label="ID"
               :is-search="true"
               popup_name="Category"

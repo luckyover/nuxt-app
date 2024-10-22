@@ -15,7 +15,7 @@ import { useAppStore } from "@/stores/app";
 import PopupCategory from "@/components/popup/category/Category.vue";
 const api = useApi();
 const appStore = useAppStore();
-
+const { errors } = storeToRefs(appStore);
 interface Item extends Record<string, any> {
   [key: string]: any;
 }
@@ -42,6 +42,10 @@ const props = defineProps({
     type: String,
     default: "text",
   },
+  name: {
+    type: String,
+    default: "text",
+  },
   label: {
     type: String,
     default: "",
@@ -63,6 +67,10 @@ const props = defineProps({
     default: false,
   },
 });
+interface CustomInputRef {
+  el: HTMLInputElement | null;
+}
+
 const items = ref<Item[]>([]);
 
 const popup = computed(() => {
@@ -78,14 +86,16 @@ const emit = defineEmits<{
   (e: "update:modelValue", value: ModelValue | ModelValue[]): void;
 }>();
 
-const defaultValue = props.multiple
-  ? Array.isArray(props.modelValue)
-    ? props.modelValue
-    : [props.modelValue] // Ensure it's an array
-  : props.modelValue;
+const defaultValue = computed(() => {
+  return props.multiple
+    ? Array.isArray(props.modelValue)
+      ? props.modelValue
+      : [props.modelValue] // Ensure it's an array
+    : props.modelValue;
+});
 
-const selected = ref<ModelValue | ModelValue[]>(defaultValue);
-const inputRef = ref(null);
+const selected = ref<ModelValue | ModelValue[]>(defaultValue.value);
+  const inputRef = ref<CustomInputRef>({ el: null });
 const isFocused = ref(false);
 const isChange = ref(false);
 function onFocus() {
@@ -107,7 +117,9 @@ function onBlur(e: FocusEvent) {
     const selectedValueAsObject = selected.value as Record<string, any>;
     if (target.value != selectedValueAsObject[props.itemValue]) {
       selected.value = {
-        ...Object.fromEntries(Object.keys({ ...selectedValueAsObject }).map((key) => [key, ""])),
+        ...Object.fromEntries(
+          Object.keys({ ...selectedValueAsObject }).map((key) => [key, ""])
+        ),
         [props.itemValue]: target.value, // Giữ lại id
       };
       isChange.value = true;
@@ -120,7 +132,11 @@ const isFocus = computed(() => (isFocused.value ? "is-focus" : ""));
 const filteredItems = computed(() => items.value);
 
 const autoComplete = async (key: string) => {
-  const response = await api.post("autocomplete",{ key: key, screen: props.screen },{ loading: false });
+  const response = await api.post(
+    "autocomplete",
+    { key: key, screen: props.screen },
+    { loading: false }
+  );
   if (response.data.status === 200) {
     items.value = response.data.data;
   }
@@ -138,7 +154,11 @@ const clear = () => {
 };
 
 const findCategory = async (id: string) => {
-  const response = await api.post("common/find", { key: id, screen: props.screen},{ loading: props.isLoading });
+  const response = await api.post(
+    "common/find",
+    { key: id, screen: props.screen },
+    { loading: props.isLoading }
+  );
   if (response.data.data && Object.keys(response.data.data).length > 0) {
     selected.value = { ...selected.value, ...response.data.data };
   } else {
@@ -158,10 +178,30 @@ const findCategory = async (id: string) => {
 watch(selected, (val) => {
   emit("update:modelValue", val);
   if (isChange.value && !props.multiple) {
-    findCategory((val as Record<string, any>)[props.itemValue]); 
+    findCategory((val as Record<string, any>)[props.itemValue]);
     isChange.value = false;
   }
 });
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    selected.value = props.multiple
+      ? Array.isArray(newVal)
+        ? newVal
+        : [newVal]
+      : newVal;
+  }
+);
+watch(
+  () => errors.value[props.name],
+  (newValue) => {
+    if (newValue && Object.keys(errors.value)[0] == props.name) {
+      if (inputRef.value.el) {
+        inputRef.value.el.focus(); // Accessing the .el property
+      }
+    }
+  }
+);
 </script>
 
 <template>
@@ -203,6 +243,7 @@ watch(selected, (val) => {
             autoComplete="off"
             ref="inputRef"
           />
+       
           <div class="absolute inset-y-0 right-0 flex items-center pr-2">
             <!-- <button v-if="multiple ? (selected as ModelValue[])?.length > 0 : selected" type="button" aria-label="Clear" @click="clear">
               <Icon
@@ -220,7 +261,7 @@ watch(selected, (val) => {
             </ComboboxButton> -->
 
             <component :is="popup" v-if="isSearch">
-              <button class="flex" tabindex="-1">
+              <button class="flex has-autocomplete" tabindex="-1">
                 <Icon
                   name="mdi:search"
                   class="h-4 w-4 text-primary-600"
@@ -277,6 +318,12 @@ watch(selected, (val) => {
           </ComboboxOptions>
         </TransitionRoot>
       </div>
+      <span
+            v-if="errors[name] && errors[name].length > 0"
+            class="text-red-600 text-s3"
+          >
+            {{ errors[name][0] }}
+          </span>
     </Combobox>
   </div>
 </template>

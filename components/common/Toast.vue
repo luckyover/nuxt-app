@@ -72,10 +72,10 @@ const iconClasses = computed(() => ({
 }));
 
 const toastMessage = computed(() => ({
-  success: 'Thành công!',
-  error: 'Lỗi',
-  info: 'Thông tin',
-  warning: 'Cảnh báo',
+  success: 'Success!',
+  error: 'Error',
+  info: 'Info',
+  warning: 'Warning',
 }));
 
 

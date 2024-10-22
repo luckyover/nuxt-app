@@ -46,7 +46,7 @@ const emit = defineEmits<{
 }>()
 
 const { modelValue } = toRefs(props)
-
+const activatorButton = ref<HTMLElement | null>(null)
 const isOpen = ref(modelValue.value)
 
 watch(modelValue, (value) => {
@@ -56,6 +56,17 @@ watch(modelValue, (value) => {
 function closeModal() {
   isOpen.value = false
   emit('modalClosed'); 
+  if(activatorButton.value){
+    const autocompleteElement = activatorButton.value.querySelector('.has-autocomplete');
+    const grandParentElement = activatorButton.value?.parentElement?.parentElement;
+    if (grandParentElement && autocompleteElement) {
+      grandParentElement.querySelector('input')?.focus()
+    }
+  }
+ 
+
+ 
+  
 }
 
 function openModal() {
@@ -83,7 +94,9 @@ provide('modal', api)
 
 <template>
   <ClientOnly>
-    <slot name="activator" :open="openModal" :on="{ click: openModal }" />
+    <div  ref="activatorButton">
+      <slot name="activator" :open="openModal" :on="{ click: openModal }" />
+    </div>
      <Teleport to="body">
         <div v-if="isOpen" class="main-popup fixed inset-0 px-3 py-6 z-[101]" scroll-region
             >
