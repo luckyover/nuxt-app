@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="overflow-x-auto">
     <table
       :class="class"
       class="table-auto min-w-full mt-2 text-left border-collapse text-s4 text-secondary-800"

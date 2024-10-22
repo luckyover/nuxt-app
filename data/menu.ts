@@ -11,4 +11,16 @@ export default [
       },
     ],
   },
+  {
+    menu: "Products",
+    icon: "carbon:product",
+    module:'product',
+    child: [
+      {
+        menu: "Product",
+        icon: "bx:menu",
+        link:"product",
+      },
+    ],
+  },
 ];
