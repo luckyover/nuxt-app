@@ -11,7 +11,7 @@ const appStore = useAppStore();
       <Toast/>
       <Message/>
 
-      
+      <NuxtLoadingIndicator />
      <NuxtPage />
   </div>
 </template>
