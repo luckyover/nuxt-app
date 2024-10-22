@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useFindFirstFocusableElement } from "@/composables/useFindFirstFocusableElement";
+import { useAppStore } from "@/stores/app";
+const appStore = useAppStore();
+const device = computed(() => appStore.device);
 const props = defineProps({
   open: {
     type: Boolean,
@@ -24,7 +27,7 @@ watch(
   }
 );
 const focusFirst = () => {
-  if(collapseWrap.value && isOpen.value == true){
+  if(collapseWrap.value && isOpen.value == true && device.value == 'pc'){
     useFindFirstFocusableElement(collapseWrap.value);
   }
 }

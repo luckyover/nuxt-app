@@ -30,7 +30,9 @@ const containerClass = computed(() => {
 
 onMounted(() => {
   hasMounted.value = true;
-  useFindFirstFocusableElement()
+  if(device.value == 'pc'){
+    useFindFirstFocusableElement()
+  }
 });
 </script>
 <template>

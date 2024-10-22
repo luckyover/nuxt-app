@@ -41,7 +41,7 @@ const fetchLogout = async () => {
     id="layout-navbar"
   >
     <div
-      class="flex w-full flex-wrap justify-between items-center px-8 md:px-6"
+      class="flex w-full flex-wrap justify-between items-center px-4 md:px-6"
     >
       <div class="navbar-brand flex items-center gap-2">
       
@@ -82,8 +82,9 @@ const fetchLogout = async () => {
           <li>
             <DropDown>
               <template #data-click>
-                <div class="w-10 h-10 rounded-full">
-                  <img src="assets/imgs/avatar_default.jpg" alt="" />
+                <div class=" rounded-full h-[52.5px] flex items-center ">
+                  <Icon name="carbon:user-avatar-filled" class="w-10 h-10 "/>
+                  <!-- <img src="assets/imgs/avatar_default.jpg" alt="" /> -->
                 </div>
               </template>
               <template #data-content>

@@ -9,7 +9,7 @@ import {
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import { useAppStore } from "@/stores/app";
 const appStore = useAppStore();
-
+const device = computed(() => appStore.device);
 const isLoadingModal = computed(() => appStore.isLoadingModal);
 
 const props = withDefaults(
@@ -59,7 +59,7 @@ function closeModal() {
   if(activatorButton.value){
     const autocompleteElement = activatorButton.value.querySelector('.has-autocomplete');
     const grandParentElement = activatorButton.value?.parentElement?.parentElement;
-    if (grandParentElement && autocompleteElement) {
+    if (grandParentElement && autocompleteElement && device.value == 'pc') {
       grandParentElement.querySelector('input')?.focus()
     }
   }

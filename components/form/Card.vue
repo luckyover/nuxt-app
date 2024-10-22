@@ -12,15 +12,15 @@ const props = defineProps({
 
 <template>
      <div class="rounded-lg shadow-md shadow-primary-300 bg-white flex flex-col h-[calc(100vh-120px)]">
-      <div class="card-title rounded-t-lg bg-primary-300 px-6">
+      <div class="card-title rounded-t-lg bg-primary-300 px-4 md:px-6">
         <h4 class="py-1 text-s4  text-wh-100">{{props.title}}</h4>
       </div>
 
       <div class="card-body  flex flex-col h-full overflow-y-auto">
-        <div class="text-right sticky px-6 py-4 bg-white z-10 top-0">
+        <div class="text-right sticky px-4 md:px-6 py-4 bg-white z-10 top-0">
             <slot name="action"></slot>
         </div>
-        <div class="px-6 py-4">
+        <div class="px-4 md:px-6 py-4">
             <slot name="body"></slot>
         </div>
        
