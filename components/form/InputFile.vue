@@ -13,13 +13,18 @@
       </p>
       <input type="file" ref="fileInput" class="hidden" @change="handleFileInput" multiple />
     </div>
-
     <div v-if="files.length > 0" class="mt-5">
       <h3 class="text-md text-secondary-800 font-semibold">Uploaded files</h3>
       <ul class="mt-3 space-y-3">
+        <Draggable v-model="files"
+          tag="transition-group"
+          :animation="200"
+          :group="{ name: 'files', pull: true, put: true }"
+           ghost-class="ghost"
+           class="grid gap-y-2">
+          <template #item="{element}">
         <li
-          v-for="file in files"
-          :key="file.name"
+          :key="element.name"
           class="flex-col flex items-start p-3 shadow-sm rounded-md border border-gray-300"
         >
           <div class="flex items-center w-full">
@@ -29,28 +34,30 @@
                   <Icon name="mdi:file-outline" class="text-xl" />
                 </span>
                 <div class="flex-col flex items-start flex-auto">
-                  <span class="file-name text-s4">{{ file.name }}</span>
+                  <span class="file-name text-s4">{{ element.name }}</span>
                   <div class="flex w-full justify-between">
-                    <span class="file-size text-s3 text-secondary-600 leading-5">{{ file.size }} MB</span>
-                    <span class="progress text-s3 text-secondary-600 leading-5">{{ file.progress }}%</span>
+                    <span class="file-size text-s3 text-secondary-600 leading-5">{{ element.size }} MB</span>
+                    <span class="progress text-s3 text-secondary-600 leading-5">{{ element.progress }}%</span>
                   </div>
                 </div>
               </div>
               <div class="w-full border border-gray-300 mt-1">
                 <div
-                  :style="{ width: file.progress + '%' }"
+                  :style="{ width: element.progress + '%' }"
                   max="100"
                   class="bg-primary-600 h-[4px] rounded-sm"
                 ></div>
               </div>
             </div>
             <div class="flex items-center ml-2">
-              <button @click="removeFile(file)" class="flex items-center">
+              <button @click="removeFile(element)" class="flex items-center">
                 <Icon name="i-mdi:close" class="" />
               </button>
             </div>
           </div>
         </li>
+      </template>
+      </Draggable>
       </ul>
     </div>
   </div>
@@ -59,7 +66,9 @@
   <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
+
 const files = ref([]);
+const allFilesUploaded = ref(true); 
 
 const triggerFileInput = () => {
   document.querySelector('input[type="file"]').click();
@@ -74,21 +83,52 @@ const handleDrop = event => {
   uploadFiles(event.dataTransfer.files);
 };
 
-const uploadFiles = fileList => {
+const uploadFiles = (fileList) => {
+
+  allFilesUploaded.value = false;
   for (let i = 0; i < fileList.length; i++) {
-    let file = fileList[i];
-    let fileData = {
+    const file = fileList[i];
+    const fileData = {
       file: file,
       name: file.name,
-      size: (file.size / (1024 * 1024)).toFixed(2), // Kích thước tính bằng MB
-      progress: 0, // Khởi tạo giá trị thanh tiến trình là 0
-      intervalId: null // Biến để lưu interval của mỗi file
+      size: (file.size / (1024 * 1024)).toFixed(2), 
+      progress: 0 
     };
-    files.value.push(fileData);
-    
-    
-    simulateUpload(fileData); // Chạy tiến trình tải cho từng file
+    files.value.push(fileData); 
+    readFile(fileData); 
   }
+};
+
+const readFile = (fileData) => {
+  const reader = new FileReader();
+  
+  reader.onprogress = (e) => {
+    if (e.lengthComputable) {
+      const percentComplete = Math.floor((e.loaded / e.total) * 100);
+      const index = files.value.indexOf(fileData); 
+      if (index !== -1) {
+        files.value[index].progress = percentComplete; 
+      }
+    }
+  };
+  // Sự kiện khi đọc file hoàn tất
+  reader.onload = () => {
+    const index = files.value.indexOf(fileData);
+    if (index !== -1) {
+      files.value[index].progress = 100; 
+    }
+    if (files.value.every(file => file.progress === 100)) {
+      allFilesUploaded.value = true; 
+    }
+  };
+
+  // Sự kiện khi có lỗi
+  reader.onerror = () => {
+    console.error(`An error occurred while reading ${fileData.name}.`);
+  };
+
+  // Đọc file dưới dạng ArrayBuffer
+  reader.readAsArrayBuffer(fileData.file);
 };
 
 const simulateUpload = (fileData) => {
