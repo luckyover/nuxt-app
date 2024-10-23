@@ -15,3 +15,8 @@ const appStore = useAppStore();
      <NuxtPage />
   </div>
 </template>
+<style>
+  .nuxt-loading-indicator{
+    opacity: 1 !important ;
+  }
+</style>

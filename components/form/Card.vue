@@ -20,10 +20,18 @@ const props = defineProps({
         <div class="text-right sticky px-4 md:px-6 py-4 bg-white z-10 top-0">
             <slot name="action"></slot>
         </div>
+        <Transition enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
+                enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+                enter-active-class="ease-out duration-300"
+                leave-from-class="opacity-100 translate-y-0 sm:scale-100"
+                leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
+                leave-active-class="ease-in duration-500" appear>
         <div class="px-4 md:px-6 py-4">
+         
             <slot name="body"></slot>
+         
         </div>
-       
+      </transition>
       </div>
     </div>
 </template>
