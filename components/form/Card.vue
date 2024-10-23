@@ -26,7 +26,7 @@ const props = defineProps({
                 leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                 leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-50"
                 leave-active-class="ease-in duration-500" appear>
-        <div class="px-4 md:px-6 py-4">
+        <div class="px-4 md:px-6 py-4 grid gap-y-2">
          
             <slot name="body"></slot>
          

@@ -113,7 +113,7 @@ function onBlur(e: FocusEvent) {
     };
   }
 
-  if (selected.value && !props.multiple) {
+  if (selected.value && !props.multiple && target.value !== "") {
     const selectedValueAsObject = selected.value as Record<string, any>;
     if (target.value != selectedValueAsObject[props.itemValue]) {
       selected.value = {

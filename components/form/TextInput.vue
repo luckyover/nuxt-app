@@ -54,7 +54,7 @@ watch(
 </script>
 
 <template>
-  <div class="mb-1">
+  <div class="">
     <label class="block text-s4 text-secondary-800">{{ label }}</label>
     <input
       :type="type"

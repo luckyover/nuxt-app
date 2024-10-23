@@ -11,11 +11,19 @@ const appStore = useAppStore();
 const api = useApi();
 
 const defaultData = {
-  id: "",
-  name: "",
-  slug: "",
-  seo_title: "",
-  meta_description: ""
+  product_id: "",
+  category_id: "",
+  product_nm: "",
+  description: "",
+  price: "",
+  price_sub: "",
+  qty_sell: "",
+  rating: "",
+  img: "",
+  brands: "",
+  s_title: "",
+  m_description: "",
+  s_slug: ""
 };
 
 const data = ref({ ...defaultData });
@@ -23,7 +31,7 @@ const data = ref({ ...defaultData });
 const { selectAutoComplete } = useSelectAutoComplete(data);
 
 const save = async () => {
-  const response = await api.post("category/save", data.value);
+  const response = await api.post("product/save", data.value);
   if (response.data.status === 200) {
     appStore.showToast({
       message: "Successfully saved!",
@@ -34,7 +42,7 @@ const save = async () => {
   }
 };
 const handelDelete = async () => {
-  const response = await api.post("category/delete", data.value);
+  const response = await api.post("product/delete", data.value);
   if (response.data.status === 200) {
     appStore.showToast({
       message: "Successfully deleted!",
@@ -42,44 +50,82 @@ const handelDelete = async () => {
       duration: 3000
     });
     setTimeout(() => {
-      data.value = { ...data.value, ...defaultData  };
+      data.value = { ...data.value, ...defaultData };
     }, 3000);
-   
   }
 };
-
 </script>
 <template>
   <Layout>
     <VCard title="Product">
       <template #action>
         <VButton type="button" class="px-4 text-s4" @click="save">Save</VButton>
-        <VButton variant="danger" type="button" class="px-4 ml-2 text-s4" @click="handelDelete">Delete</VButton>
+        <VButton
+          variant="danger"
+          type="button"
+          class="px-4 ml-2 text-s4"
+          @click="handelDelete"
+        >Delete</VButton>
       </template>
       <template #body>
-      
-        <div class="grid lg:grid-cols-2 md:grid-cols-1 gap-2">
+        <div class="grid md:grid-cols-2 gap-2">
           <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
             <Autocomplete
               v-model="selectAutoComplete"
-              screen="category"
-              itemText="name"
+              screen="product"
+              itemText="product_nm"
               :isLoading="true"
-              itemValue="id"
+              itemValue="product_id"
               name="id"
-              label="ID"
+              label="Product ID"
               :is-search="true"
-              popup_name="Category"
+              popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.name" label="Category name" name="name" type="text" />
+            <TextInput v-model="data.name" label="Product name" name="product_nm" type="text" />
           </div>
           <div>
-            <TextInput v-model="data.slug" label="Slug" name="slug" type="text" />
+            <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
+              <Autocomplete
+                v-model="selectAutoComplete"
+                screen="category"
+                itemText="name"
+                :isLoading="true"
+                itemValue="id"
+                name="id"
+                label="Category ID"
+                :is-search="true"
+                popup_name="Category"
+              ></Autocomplete>
+
+              <TextInput v-model="data.name" label="Category name" name="category_id" type="text" />
+            </div>
           </div>
         </div>
-
         <div class="grid md:grid-cols-2 gap-2">
+          <div class="grid md:grid-cols-4 gap-2">
+            <TextInput v-model="data.seo_title" label="Price" name="seo_title" type="text" />
+            <TextInput v-model="data.seo_title" label="Price sub" name="seo_title" type="text" />
+            <TextInput v-model="data.seo_title" label="Quantity sell" name="seo_title" type="text" />
+            <TextInput v-model="data.seo_title" label="Rating" name="seo_title" type="text" />
+          </div>
+          <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
+            <Autocomplete
+              v-model="selectAutoComplete"
+              screen="product"
+              itemText="product_nm"
+              :isLoading="true"
+              itemValue="product_id"
+              name="id"
+              label="Product ID"
+              :is-search="true"
+              popup_name="product"
+            ></Autocomplete>
+
+            <TextInput v-model="data.name" label="Product name" name="product_nm" type="text" />
+          </div>
+          <TextInput v-model="data.seo_title" label="Seo Slug" name="seo_title" type="text" />
+
           <TextInput v-model="data.seo_title" label="Seo title" name="seo_title" type="text" />
           <VTextarea
             v-model="data.meta_description"
@@ -87,7 +133,14 @@ const handelDelete = async () => {
             name="meta_description"
             :rows="3"
           />
-          <VInputFile/>
+          <VTextarea
+            v-model="data.meta_description"
+            label="Description"
+            name="meta_description"
+            :rows="3"
+          />
+          <VInputFile label="Slider"/>
+          <VInputFile label="Image"/>
         </div>
       </template>
     </VCard>
