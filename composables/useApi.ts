@@ -58,16 +58,14 @@ const createApi = () => {
       const status = error.response.status;
       appStore.stopLoading();
       appStore.clearError();
-      
+      console.log(status)
       if ([401, 500, 501,404].includes(status)) {
-       
         appStore.showToast({
           message: error.response.data.message || error.message,
           type: 'error',
           duration: 3000,
         });
       }else if([422, 201].includes(status)){
-
         appStore.addError(error.response.data.error)
       }else{
         appStore.showToast({

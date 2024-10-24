@@ -13,6 +13,7 @@ const api = useApi();
 const defaultData = {
   product_id: "",
   category_id: "",
+  category_nm: "",
   product_nm: "",
   description: "",
   price: "",
@@ -20,7 +21,7 @@ const defaultData = {
   qty_sell: "",
   rating: "",
   img: "",
-  brands: "",
+  brand_id: "",
   s_title: "",
   m_description: "",
   s_slug: ""
@@ -82,7 +83,7 @@ const handelDelete = async () => {
               popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.name" label="Product name" name="product_nm" type="text" />
+            <TextInput v-model="data.product_nm" label="Product name" name="product_nm" type="text" />
           </div>
           <div>
             <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
@@ -92,22 +93,22 @@ const handelDelete = async () => {
                 itemText="name"
                 :isLoading="true"
                 itemValue="id"
-                name="id"
+                name="category_id"
                 label="Category ID"
                 :is-search="true"
                 popup_name="Category"
               ></Autocomplete>
 
-              <TextInput v-model="data.name" label="Category name" name="category_id" type="text" />
+              <TextInput v-model="data.category_nm" label="Category name" name="" type="text" />
             </div>
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-2">
           <div class="grid md:grid-cols-4 gap-2">
-            <TextInput v-model="data.seo_title" label="Price" name="seo_title" type="text" />
-            <TextInput v-model="data.seo_title" label="Price sub" name="seo_title" type="text" />
-            <TextInput v-model="data.seo_title" label="Quantity sell" name="seo_title" type="text" />
-            <TextInput v-model="data.seo_title" label="Rating" name="seo_title" type="text" />
+            <TextInput v-model="data.price" label="Price" name="price" type="text" />
+            <TextInput v-model="data.price_sub" label="Price sub" name="price_sub" type="text" />
+            <TextInput v-model="data.qty_sell" label="Quantity sell" name="qty_sell" type="text" />
+            <TextInput v-model="data.rating" label="Rating" name="rating" type="text" />
           </div>
           <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
             <Autocomplete
@@ -115,18 +116,18 @@ const handelDelete = async () => {
               screen="product"
               itemText="product_nm"
               :isLoading="true"
-              itemValue="product_id"
+              itemValue="brand_id"
               name="id"
-              label="Product ID"
+              label="Brand ID"
               :is-search="true"
               popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.name" label="Product name" name="product_nm" type="text" />
+            <TextInput v-model="data.name" label="Brand name" name="" type="text" />
           </div>
-          <TextInput v-model="data.seo_title" label="Seo Slug" name="seo_title" type="text" />
+          <TextInput v-model="data.s_slug" label="Seo Slug" name="s_slug" type="text" />
 
-          <TextInput v-model="data.seo_title" label="Seo title" name="seo_title" type="text" />
+          <TextInput v-model="data.s_title" label="Seo title" name="s_title" type="text" />
           <VTextarea
             v-model="data.meta_description"
             label="Meta description"
@@ -134,7 +135,7 @@ const handelDelete = async () => {
             :rows="3"
           />
           <VTextarea
-            v-model="data.meta_description"
+            v-model="data.description"
             label="Description"
             name="meta_description"
             :rows="3"

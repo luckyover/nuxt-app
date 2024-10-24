@@ -13,11 +13,11 @@ const appStore = useAppStore();
 const api = useApi();
 
 const defaultData = {
-  id: "",
-  name: "",
-  slug: "",
-  seo_title: "",
-  meta_description: ""
+  category_id: "",
+  category_nm: "",
+  s_slug: "",
+  s_title: "",
+  m_description: ""
 };
 
 const data = ref({ ...defaultData });
@@ -65,28 +65,28 @@ const handelDelete = async () => {
             <Autocomplete
               v-model="selectAutoComplete"
               screen="category"
-              itemText="name"
+              itemText="category_nm"
               :isLoading="true"
-              itemValue="id"
-              name="id"
-              label="ID"
+              itemValue="category_id"
+              name="category_id"
+              label="Category ID"
               :is-search="true"
               popup_name="Category"
             ></Autocomplete>
 
-            <TextInput v-model="data.name" label="Category name" name="name" type="text" />
+            <TextInput v-model="data.category_nm" label="Category name" name="category_nm" type="text" />
           </div>
           <div>
-            <TextInput v-model="data.slug" label="Slug" name="slug" type="text" />
+            <TextInput v-model="data.s_slug" label="Slug" name="s_slug" type="text" />
           </div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-2">
-          <TextInput v-model="data.seo_title" label="Seo title" name="seo_title" type="text" />
+          <TextInput v-model="data.s_title" label="Seo title" name="s_title" type="text" />
           <VTextarea
-            v-model="data.meta_description"
+            v-model="data.m_description"
             label="Meta description"
-            name="meta_description"
+            name="m_description"
             rows="3"
           />
         </div>

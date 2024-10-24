@@ -1,6 +1,6 @@
 <!-- components/Toast.vue -->
 <template>
-  <div class="fixed top-5 right-5 z-50">
+  <div class="fixed top-5 right-5 z-[999999]">
     <transition-group name="fade" tag="div" appear>
       <div v-for="(toast, index) in toasts" :key="index"
         enter-from-class="opacity-0 translate-x-full"

@@ -47,6 +47,8 @@ export const useAppStore = defineStore('app', {
 
     showToast(message: Toast) {
       this.toasts.push(message);
+      console.log(message);
+      
       setTimeout(() => {
         this.removeToast(this.toasts.length - 1); // Remove the last toast added
       }, message.duration);
@@ -57,6 +59,7 @@ export const useAppStore = defineStore('app', {
     },
     //message error
     addError(error:Record<string, string[]>){
+    
       this.errors = {
         ...error
       }

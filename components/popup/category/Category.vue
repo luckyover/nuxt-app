@@ -9,7 +9,7 @@ import { ref , nextTick} from "vue";
 
 const api = useApi();
 const searchCondition = ref({
-  name: "",
+  category_nm: "",
   total: 0,
   page_size: 20,
   page: 1,
@@ -17,10 +17,10 @@ const searchCondition = ref({
 const isShowCollapse = ref(true)
 const dataTable = ref<IDataTable[]>([]);
 const headers = [
-  { name: "id", column: "#", type: "text", width: "5%" },
-  { name: "name", column: "Name", type: "text", width: "10%" },
-  { name: "seo_title", column: "Seo-Title", type: "text", width: "10%" },
-  { name: "slug", column: "Slug", type: "text", width: "10%" },
+  { name: "category_id", column: "#", type: "text", width: "5%" },
+  { name: "category_nm", column: "Name", type: "text", width: "10%" },
+  { name: "s_title", column: "Seo-Title", type: "text", width: "10%" },
+  { name: "s_slug", column: "Slug", type: "text", width: "10%" },
   { name: "created_at", column: "Created-At", type: "text", width: "10%" },
   { name: "updated_at", column: "Updated-At", type: "text", width: "10%" },
   // { name: "status", column: "Status", type: "status", width: "10%" },
@@ -43,7 +43,7 @@ const Search = async () => {
 const handleModalClose = () => {
   dataTable.value = []
   searchCondition.value = {
-      name: "",
+      category_nm: "",
       total: 0,
       page_size: 20,
       page: 1,
@@ -65,7 +65,7 @@ const handleModalClose = () => {
         <template #content>
           <div class="grid md:grid-cols-4 gap-2">
             <TextInput
-              v-model="searchCondition.name"
+              v-model="searchCondition.category_nm"
               label="Category name"
               name="Category name"
               type="text"
