@@ -20,8 +20,9 @@ const defaultData = {
   price_sub: "",
   qty_sell: "",
   rating: "",
-  img: "",
+  img: [],
   brand_id: "",
+  brand_nm: "",
   s_title: "",
   m_description: "",
   s_slug: ""
@@ -30,6 +31,7 @@ const defaultData = {
 const data = ref({ ...defaultData });
 
 const { selectAutoComplete } = useSelectAutoComplete(data);
+const { selectAutoComplete:selectCategory } = useSelectAutoComplete(data,['category_id','category_nm']);
 
 const save = async () => {
   const response = await api.post("product/save", data.value);
@@ -88,11 +90,11 @@ const handelDelete = async () => {
           <div>
             <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
               <Autocomplete
-                v-model="selectAutoComplete"
+                v-model="selectCategory"
                 screen="category"
-                itemText="name"
+                itemText="category_nm"
                 :isLoading="true"
-                itemValue="id"
+                itemValue="category_id"
                 name="category_id"
                 label="Category ID"
                 :is-search="true"
@@ -123,13 +125,13 @@ const handelDelete = async () => {
               popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.name" label="Brand name" name="" type="text" />
+            <TextInput v-model="data.brand_nm" label="Brand name" name="" type="text" />
           </div>
           <TextInput v-model="data.s_slug" label="Seo Slug" name="s_slug" type="text" />
 
           <TextInput v-model="data.s_title" label="Seo title" name="s_title" type="text" />
           <VTextarea
-            v-model="data.meta_description"
+            v-model="data.m_description"
             label="Meta description"
             name="meta_description"
             :rows="3"
@@ -141,7 +143,7 @@ const handelDelete = async () => {
             :rows="3"
           />
           <VInputFile label="Slider"/>
-          <VInputFile label="Image"/>
+          <VInputFile v-model="data.img" label="Image"/>
         </div>
       </template>
     </VCard>

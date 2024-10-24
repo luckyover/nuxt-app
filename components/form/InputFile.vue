@@ -67,20 +67,24 @@
 </template>
   
   <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted} from "vue";
 const props = defineProps({
   label: {
     type: String,
     default: "",
   },
+  modelValue: {
+     type: Array,
+     default: () => [],
+  },
 });
-
-
-const files = ref([]);
+const emit = defineEmits(['update:modelValue']); // Khai báo emit
+const fileInput = ref(null);
+const files = ref([...props.modelValue]);
 const allFilesUploaded = ref(true); 
 
 const triggerFileInput = () => {
-  document.querySelector('input[type="file"]').click();
+  fileInput.value.click();
 };
 
 const handleFileInput = event => {
@@ -168,6 +172,17 @@ const removeFile = file => {
   files.value = files.value.filter(f => f !== file);
 };
 
+watch(files, (newValue) => {
+  emit("update:modelValue", newValue);
+}, { deep: true });
+
+watch(
+  () => props.modelValue, // Theo dõi prop modelValue
+  (newValue) => {
+    files.value = [...newValue]; // Cập nhật files khi modelValue thay đổi
+  },
+  { immediate: true } // Gọi ngay lập tức với giá trị hiện tại
+);
 // Chặn kéo thả ngoài khu vực upload
 const preventGlobalDragAndDrop = e => {
   e.preventDefault();
