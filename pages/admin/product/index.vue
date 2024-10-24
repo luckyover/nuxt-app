@@ -31,10 +31,43 @@ const defaultData = {
 const data = ref({ ...defaultData });
 
 const { selectAutoComplete } = useSelectAutoComplete(data);
-const { selectAutoComplete:selectCategory } = useSelectAutoComplete(data,['category_id','category_nm']);
+const { selectAutoComplete: selectCategory } = useSelectAutoComplete(data, [
+  "category_id",
+  "category_nm"
+]);
 
 const save = async () => {
-  const response = await api.post("product/save", data.value);
+  const formData = new FormData();
+
+  // Append each field
+  formData.append("product_id", data.value.product_id);
+  formData.append("category_id", data.value.category_id);
+  formData.append("category_nm", data.value.category_nm);
+  formData.append("product_nm", data.value.product_nm);
+  formData.append("description", data.value.description);
+  formData.append("price", data.value.price);
+  formData.append("price_sub", data.value.price_sub);
+  formData.append("qty_sell", data.value.qty_sell);
+  formData.append("rating", data.value.rating);
+  formData.append("brand_id", data.value.brand_id);
+  formData.append("brand_nm", data.value.brand_nm);
+  formData.append("s_title", data.value.s_title);
+  formData.append("m_description", data.value.m_description);
+  formData.append("s_slug", data.value.s_slug);
+
+  // Handle the file upload (assuming a single file for simplicity)
+  data.value.img.forEach((media, index) => {
+    const file = media.file;
+    if (file) {
+      formData.append(`img[${index}]`, file, media.name);
+    }
+  });
+
+  const response = await api.post("product/save", formData,{
+     headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   if (response.data.status === 200) {
     appStore.showToast({
       message: "Successfully saved!",
@@ -85,7 +118,12 @@ const handelDelete = async () => {
               popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.product_nm" label="Product name" name="product_nm" type="text" />
+            <TextInput
+              v-model="data.product_nm"
+              label="Product name"
+              name="product_nm"
+              type="text"
+            />
           </div>
           <div>
             <div class="grid md:grid-cols-[170px_repeat(1,1fr)] gap-2">
@@ -101,7 +139,7 @@ const handelDelete = async () => {
                 popup_name="Category"
               ></Autocomplete>
 
-              <TextInput v-model="data.category_nm" label="Category name" name="" type="text" />
+              <TextInput v-model="data.category_nm" label="Category name" name type="text" />
             </div>
           </div>
         </div>
@@ -125,7 +163,7 @@ const handelDelete = async () => {
               popup_name="product"
             ></Autocomplete>
 
-            <TextInput v-model="data.brand_nm" label="Brand name" name="" type="text" />
+            <TextInput v-model="data.brand_nm" label="Brand name" name type="text" />
           </div>
           <TextInput v-model="data.s_slug" label="Seo Slug" name="s_slug" type="text" />
 
@@ -142,8 +180,8 @@ const handelDelete = async () => {
             name="meta_description"
             :rows="3"
           />
-          <VInputFile label="Slider"/>
-          <VInputFile v-model="data.img" label="Image"/>
+          <VInputFile label="Slider" />
+          <VInputFile v-model="data.img" label="Image" />
         </div>
       </template>
     </VCard>
